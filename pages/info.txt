@@ -1,6 +1,0 @@
-Subpasta para páginas adicionais do Streamlit
-
-1 - Página do dashboard financeiro
-2 - Página de relatórios financeiros
-3 - Página de configurações
-4 - Subpasta para dados e bases de dados

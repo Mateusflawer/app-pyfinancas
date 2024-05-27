@@ -1,1 +1,0 @@
-Subpasta para arquivos estáticos (imagens, CSS, etc.)

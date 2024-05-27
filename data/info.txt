@@ -1,5 +1,0 @@
-Subpasta para dados e bases de dados
-
-1 - Script para carregar dados
-2 - Exemplo de arquivo de dados
-3 - Subpasta para utilitários e funções auxiliares
