@@ -13,7 +13,7 @@ css = data_loader.local_css(LOCAL_CSS)
 st.markdown(css, unsafe_allow_html=True)
 
 # Carregando dados para a dashboard
-df = data_loader.get_data()
+df = data_loader.example_transactions()
 
 # Mostrando gráficos e metricas
 metrics.dashboard(df)

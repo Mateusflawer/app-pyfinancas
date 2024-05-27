@@ -6,14 +6,14 @@ def local_css(file_name):
         return f'<style>{f.read()}</style>'
     
 
-def get_data():
+def example_transactions():
     # Gerando dados fictícios para entradas e despesas mensais
     categorias = ['Salário', 'Freelance', 'Investimentos', 'Presentes', 'Outros']
     entradas = [4000, 1500, 800, 200, 300]
     despesas = [1000, 500, 200, 150, 100]
 
     # Expandindo os dados para múltiplos meses
-    datas = pd.date_range(start='2023-01-01', periods=6, freq='M')
+    datas = pd.date_range(start='2023-01-01', periods=6, freq='ME')
     data_expanded = {
         'Data': [],
         'Categoria': [],
