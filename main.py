@@ -1,7 +1,7 @@
-import streamlit as st
+from utils import helpers
 
 def main():
-    st.switch_page("pages/dashboard.py")
+    helpers.menu()
 
 
 if __name__ == "__main__":
