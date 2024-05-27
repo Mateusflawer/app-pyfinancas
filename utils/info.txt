@@ -1,0 +1,4 @@
+Subpasta para utilitários e funções auxiliares
+
+1 - Funções de cálculo financeiro
+2 - Funções auxiliares gerais
