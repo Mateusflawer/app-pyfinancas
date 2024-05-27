@@ -1,10 +1,8 @@
 import streamlit as st
 
-
 def main():
-    st.header("Olá, mundo!")
+    st.switch_page("pages/dashboard.py")
 
 
 if __name__ == "__main__":
     main()
-
