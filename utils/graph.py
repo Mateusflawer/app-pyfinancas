@@ -81,3 +81,26 @@ def dashboard(df):
             # Tabela de dados
             st.subheader("Tabela de dados")
             st.dataframe(df, use_container_width=True)
+
+def indicador():
+
+    fig = go.Figure(go.Indicator(
+        mode = "gauge+number",
+        value = 270,
+        title = {'text': "Progresso"},
+        gauge = {
+            'axis': {'range': [0, 500]},
+            'bar': {'color': "darkblue"},
+            'steps': [
+                {'range': [0, 250], 'color': "lightgray"},
+                {'range': [250, 400], 'color': "gray"}
+            ],
+            'threshold': {
+                'line': {'color': "red", 'width': 4},
+                'thickness': 0.75,
+                'value': 490
+            }
+        }
+    ))
+
+    st.plotly_chart(fig)
