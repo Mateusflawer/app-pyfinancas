@@ -1,9 +1,11 @@
 import streamlit as st
 from data import data_loader
-from utils import metrics, graph
+from utils import metrics, graph, helpers
 
 # Configurações da página
 st.set_page_config("Dashboard", "📊", "wide",)
+
+helpers.menu()
 
 # Caminho do css da página
 LOCAL_CSS = "app-pyfinancas\\assets\\styles.css"
