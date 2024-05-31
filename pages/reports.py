@@ -19,26 +19,26 @@ def main():
     with col1:
         with st.container(border=True):
             st.subheader("Transações")
-            st.dataframe(df_transactions, hide_index=True)
+            st.dataframe(df_transactions, hide_index=True, use_container_width=True)
             if st.button("Registrar Transação", type="primary"):
                 helpers.dialog_register_transaction()
         
         with st.container(border=True):
             st.subheader("Categorias")
-            st.dataframe(df_categories, hide_index=True)
+            st.dataframe(df_categories, hide_index=True, use_container_width=True)
             if st.button("Registrar Categoria", type="primary"):
                 helpers.dialog_register_categorie()
 
     with col2:
         with st.container(border=True):
             st.subheader("Contas")
-            st.dataframe(df_accounts, hide_index=True)
+            st.dataframe(df_accounts, hide_index=True, use_container_width=True)
             if st.button("Registrar Conta", type="primary"):
                 helpers.dialog_register_account()
     
         with st.container(border=True):
             st.subheader("Cartões de Crédito")
-            st.dataframe(df_credit_cards, hide_index=True)
+            st.dataframe(df_credit_cards, hide_index=True, use_container_width=True)
             if st.button("Registrar Cartão de Crédito", type="primary"):
                 helpers.dialog_register_credit_card()
 

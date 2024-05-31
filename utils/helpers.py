@@ -36,7 +36,7 @@ def dialog_register_transaction():
         transaction.conta = st.selectbox("Conta", df_accounts["Nome"])
 
     col1, col2 = st.columns(2)
-    transaction.data = col1.date_input("Data")
+    transaction.data = col1.date_input("Data", format="DD/MM/YYYY")
     transaction.hora = col2.time_input("Hora")
     transaction.valor = st.number_input("Valor")
 
