@@ -1,8 +1,8 @@
 import streamlit as st
-from utils import helpers
+import utils
 
 def main():
-    helpers.menu()
+    utils.helpers.menu()
 
     st.title("Bem vindo as Configurações!")
     st.info("Em desenvolvimento...", icon="⚙️")

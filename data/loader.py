@@ -1,11 +1,40 @@
 import pandas as pd
 
+# CSS
+LOCAL_CSS = "app-pyfinancas\\assets\\styles.css"
+
+# CSV's
+LOCAL_TRANSACTIONS = "app-pyfinancas\\data\\transactions.csv"
+LOCAL_CATEGORIES = "app-pyfinancas\\data\\categories.csv"
+LOCAL_ACCOUNTS = "app-pyfinancas\\data\\accounts.csv"
+LOCAL_CREDIT_CARDS = "app-pyfinancas\\data\\credit_cards.csv"
+
 # Função para ler o arquivo CSS
-def local_css(file_name):
-    with open(file_name) as f:
+def local_css():
+    with open(LOCAL_TRANSACTIONS) as f:
         return f'<style>{f.read()}</style>'
     
+# Carrega transações
+def local_transactions():
+    df = pd.read_csv(LOCAL_TRANSACTIONS, sep=";")
+    return df
 
+# Carrega categorias
+def local_categories():
+    df = pd.read_csv(LOCAL_CATEGORIES, sep=";")
+    return df
+
+# Carrega contas
+def local_accounts():
+    df = pd.read_csv(LOCAL_ACCOUNTS, sep=";")
+    return df
+
+# Carrega cartões de crédito
+def local_credit_cards():
+    df = pd.read_csv(LOCAL_CREDIT_CARDS, sep=";")
+    return df
+
+# Carrega exemplo de transações
 def example_transactions():
     # Gerando dados fictícios para entradas e despesas mensais
     categorias = ['Salário', 'Freelance', 'Investimentos', 'Presentes', 'Outros']

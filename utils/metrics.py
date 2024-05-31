@@ -1,8 +1,8 @@
 import streamlit as st
-from utils import calculations
+import utils.calculations
 
 def dashboard(df):
-    saldo, entradas, despesas = calculations.dashboard_metrics(df)
+    saldo, entradas, despesas = utils.calculations.dashboard_metrics(df)
 
     # Metricas
     col_saldo, col_entradas, col_despesas = st.columns(3)

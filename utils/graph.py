@@ -14,6 +14,8 @@ def dashboard(df):
                             color_discrete_sequence=px.colors.qualitative.Pastel)
             st.plotly_chart(fig_entradas)
 
+
+
         with st.container(border=True):
             # Agrupando os dados para o gráfico de evolução mensal
             df_entradas = df[df['Tipo'] == 'Entradas'].groupby('Data').sum().reset_index()
@@ -70,6 +72,7 @@ def dashboard(df):
 
 
     with coluna_2:
+
         with st.container(border=True):
             # Gráfico de despesas por categoria
             fig_despesas = px.pie(df[df['Tipo'] == 'Despesas'], names='Categoria', values='Valor', title='Despesas por Categoria',
@@ -79,8 +82,7 @@ def dashboard(df):
 
         with st.container(border=True):
             # Tabela de dados
-            st.subheader("Tabela de dados")
-            st.dataframe(df, use_container_width=True)
+            st.title("Sem ideias")
 
 def indicador():
 
