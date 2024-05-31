@@ -9,6 +9,7 @@ locale.setlocale(locale.LC_ALL, "portuguese_brazil")
 class Transaction:
     def __init__(self):
         self._data = None
+        self.descricao = None
         self.categoria = None
         self.tipo = None
         self.conta = None
@@ -28,6 +29,7 @@ class Transaction:
     def dataframe(self):
         data = [{
             "Data": self._data,
+            "Descricao": self.descricao,
             "Categoria": self.categoria,
             "Tipo": self.tipo,
             "Conta": self.conta,

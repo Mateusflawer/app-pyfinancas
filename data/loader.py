@@ -12,7 +12,7 @@ LOCAL_CREDIT_CARDS = creator.LOCAL_CREDIT_CARDS
 
 # Função para ler o arquivo CSS
 def local_css():
-    with open(LOCAL_TRANSACTIONS) as f:
+    with open(LOCAL_CSS) as f:
         return f'<style>{f.read()}</style>'
     
 # Carrega transações

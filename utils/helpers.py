@@ -1,5 +1,6 @@
+from data import controller, loader, saver
 import streamlit as st
-from data import controller, loader
+import datetime
 import locale
 
 TIPOS =  ("Entradas", "Despesas")
@@ -21,6 +22,9 @@ def dialog_register_transaction():
         df_credit_cards = loader.local_credit_cards()
 
     transaction = controller.Transaction()
+
+    transaction.descricao = st.text_area("Descrição")
+
     transaction.tipo = st.selectbox("Tipo", TIPOS)
     
     if transaction.tipo == "Entradas":
@@ -84,3 +88,28 @@ def dialog_register_credit_card():
     if st.button("Salvar"):
         controller.saver_local_credit_card(credit_card)
         st.rerun()
+
+
+def format_data_br(data):
+    if isinstance(data, str):
+        formato = "%Y-%m-%d"
+        formato_br = "%d/%m/%Y"
+        data_datetime = datetime.datetime.strptime(data, formato)
+        data_str = data_datetime.strftime(formato_br)
+        return data_str
+    
+@st.experimental_dialog("Excluir transação")
+def dialog_delete_transaction_line():
+    df = loader.local_transactions()
+
+    if not "Excluir" in df.columns:
+        df.insert(0, "Excluir", False)
+
+    df_result = st.data_editor(df, use_container_width=True, hide_index=True)
+    
+    if st.button("Excluir"):
+        df_result = df_result[df_result["Excluir"]!=True]
+        df_result = df_result.drop(columns=["Excluir"])
+        saver.local_transaction(df_result)
+        st.rerun()
+    

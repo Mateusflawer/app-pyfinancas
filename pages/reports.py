@@ -23,12 +23,18 @@ def main():
     with col1:
         with st.container(border=True):
             st.subheader("Transações")
+            df_transactions["Data"] = df_transactions["Data"].apply(helpers.format_data_br)
             st.dataframe(df_transactions, hide_index=True, use_container_width=True)
-            if st.button("Registrar Transação", type="primary"):
+            col_registrar, col_deletar, col_editar = st.columns(3)
+            if col_registrar.button("Registrar Transação", type="primary"):
                 helpers.dialog_register_transaction()
+
+            if col_deletar.button("Deletar Transação", type="primary"):
+                helpers.dialog_delete_transaction_line()
         
         with st.container(border=True):
             st.subheader("Categorias")
+            df_categories["Data"] = df_categories["Data"].apply(helpers.format_data_br)
             st.dataframe(df_categories, hide_index=True, use_container_width=True)
             if st.button("Registrar Categoria", type="primary"):
                 helpers.dialog_register_categorie()
@@ -36,12 +42,14 @@ def main():
     with col2:
         with st.container(border=True):
             st.subheader("Contas")
+            df_accounts["Data"] = df_accounts["Data"].apply(helpers.format_data_br)
             st.dataframe(df_accounts, hide_index=True, use_container_width=True)
             if st.button("Registrar Conta", type="primary"):
                 helpers.dialog_register_account()
     
         with st.container(border=True):
             st.subheader("Cartões de Crédito")
+            df_credit_cards["Data"] = df_credit_cards["Data"].apply(helpers.format_data_br)
             st.dataframe(df_credit_cards, hide_index=True, use_container_width=True)
             if st.button("Registrar Cartão de Crédito", type="primary"):
                 helpers.dialog_register_credit_card()
