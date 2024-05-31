@@ -24,20 +24,18 @@ def dialog_register_transaction():
     transaction.tipo = st.selectbox("Tipo", TIPOS)
     
     if transaction.tipo == "Entradas":
-        categorias = df_categories[df_categories["Tipo"]=="Entradas"]["Nome"]
+        categorias = df_categories[df_categories["Tipo"]=="Entradas"]["Nome"].unique()
     else:
-        categorias = df_categories[df_categories["Tipo"]=="Despesas"]["Nome"]
+        categorias = df_categories[df_categories["Tipo"]=="Despesas"]["Nome"].unique()
 
     transaction.categoria = st.selectbox("Categoria", categorias)
     credito = st.toggle("Crédito?")
     if credito:
-        transaction.credit_card = st.selectbox("Cartão de crédito", df_credit_cards["Nome"])
+        transaction.credit_card = st.selectbox("Cartão de crédito", df_credit_cards["Nome"].unique())
     else:
-        transaction.conta = st.selectbox("Conta", df_accounts["Nome"])
+        transaction.conta = st.selectbox("Conta", df_accounts["Nome"].unique())
 
-    col1, col2 = st.columns(2)
-    transaction.data = col1.date_input("Data", format="DD/MM/YYYY")
-    transaction.hora = col2.time_input("Hora")
+    transaction.data = st.date_input("Data", format="DD/MM/YYYY")
     transaction.valor = st.number_input("Valor")
 
     if st.button("Salvar"):
@@ -51,9 +49,7 @@ def dialog_register_categorie():
     categorie.nome = st.text_input("Nome")
     categorie.tipo = st.selectbox("Tipo", TIPOS)
 
-    col1, col2 = st.columns(2)
-    categorie.data = col1.date_input("Data")
-    categorie.hora = col2.time_input("Hora")
+    categorie.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
     if st.button("Salvar"):
         controller.saver_local_categorie(categorie)
@@ -66,9 +62,7 @@ def dialog_register_account():
     account = controller.Account()
     account.nome = st.text_input("Nome")
 
-    col1, col2 = st.columns(2)
-    account.data = col1.date_input("Data")
-    account.hora = col2.time_input("Hora")
+    account.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
     if st.button("Salvar"):
         controller.saver_local_account(account)
@@ -81,13 +75,11 @@ def dialog_register_credit_card():
     credit_card = controller.CreditCard()
     credit_card.nome = st.text_input("Nome")
 
-    col1, col2 = st.columns(2)
-    credit_card.data = col1.date_input("Data")
-    credit_card.hora = col2.time_input("Hora")
+    credit_card.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
-    credit_card.fechamento = st.number_input("Fechamento", step=0, min_value=1)
-    credit_card.vencimento = st.number_input("Vencimento", step=0, min_value=1)
-    credit_card.limite = st.number_input("Limite", step=0)
+    credit_card.fechamento = st.number_input("Fechamento", step=0, min_value=1, max_value=31)
+    credit_card.vencimento = st.number_input("Vencimento", step=0, min_value=1, max_value=31)
+    credit_card.limite = st.number_input("Limite", step=10)
 
     if st.button("Salvar"):
         controller.saver_local_credit_card(credit_card)

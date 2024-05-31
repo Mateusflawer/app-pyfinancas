@@ -7,8 +7,7 @@ locale.setlocale(locale.LC_ALL, "portuguese_brazil")
 
 class Transaction:
     def __init__(self):
-        self.data = None
-        self.hora = None
+        self._data = None
         self.categoria = None
         self.tipo = None
         self.conta = None
@@ -16,15 +15,18 @@ class Transaction:
         self.valor = None
 
     @property
-    def data_hora(self):
-        data_hora_str = f"{self.data} {self.hora}"
-        data_hora = datetime.datetime.strptime(data_hora_str, "%Y-%m-%d %H:%M:%S")
+    def data(self):
+        data_hora = datetime.datetime.strptime(self._data, "%Y-%m-%d")
         return data_hora
+
+    @data.setter
+    def data(self, data):
+        self._data = data
 
     @property
     def dataframe(self):
         data = [{
-            "Data": self.data_hora,
+            "Data": self._data,
             "Categoria": self.categoria,
             "Tipo": self.tipo,
             "Conta": self.conta,
@@ -36,20 +38,22 @@ class Transaction:
 class Categorie:
     def __init__(self):
         self.nome = None
-        self.data = None
-        self.hora = None
+        self._data = None
         self.tipo = None
 
     @property
-    def data_hora(self):
-        data_hora_str = f"{self.data} {self.hora}"
-        data_hora = datetime.datetime.strptime(data_hora_str, "%Y-%m-%d %H:%M:%S")
+    def data(self):
+        data_hora = datetime.datetime.strptime(self._data, "%Y-%m-%d")
         return data_hora
+
+    @data.setter
+    def data(self, data):
+        self._data = data
 
     @property
     def dataframe(self):
         data = [{
-            "Data": self.data_hora,
+            "Data": self._data,
             "Nome": self.nome,
             "Tipo": self.tipo,
         }]
@@ -58,19 +62,21 @@ class Categorie:
 class Account:
     def __init__(self):
         self.nome = None
-        self.data = None
-        self.hora = None
+        self._data = None
 
     @property
-    def data_hora(self):
-        data_hora_str = f"{self.data} {self.hora}"
-        data_hora = datetime.datetime.strptime(data_hora_str, "%Y-%m-%d %H:%M:%S")
+    def data(self):
+        data_hora = datetime.datetime.strptime(self._data, "%Y-%m-%d %H:%M:%S")
         return data_hora
+
+    @data.setter
+    def data(self, data):
+        self._data = data
 
     @property
     def dataframe(self):
         data = [{
-            "Data": self.data_hora,
+            "Data": self._data,
             "Nome": self.nome,
         }]
         return pd.DataFrame(data)
@@ -78,22 +84,24 @@ class Account:
 class CreditCard:
     def __init__(self):
         self.nome = None
-        self.data = None
-        self.hora = None
+        self._data = None
         self.fechamento = None
         self.vencimento = None
         self.limite = None
 
     @property
-    def data_hora(self):
-        data_hora_str = f"{self.data} {self.hora}"
-        data_hora = datetime.datetime.strptime(data_hora_str, "%Y-%m-%d %H:%M:%S")
+    def data(self):
+        data_hora = datetime.datetime.strptime(self._data, "%Y-%m-%d")
         return data_hora
+
+    @data.setter
+    def data(self, data):
+        self._data = data
 
     @property
     def dataframe(self):
         data = [{
-            "Data": self.data_hora,
+            "Data": self._data,
             "Nome": self.nome,
             "Fechamento": self.fechamento,
             "Vencimento": self.vencimento,
