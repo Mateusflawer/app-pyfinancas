@@ -15,6 +15,8 @@ helpers.menu()
 css = loader.local_css()
 st.markdown(css, unsafe_allow_html=True)
 
+controller.check_data()
+
 df = loader.local_transactions()
 # df = loader.example_transactions()
 

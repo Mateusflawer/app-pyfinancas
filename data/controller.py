@@ -1,7 +1,8 @@
-from data import loader, creator, saver
+from data import creator, saver, loader
 import pandas as pd
 import datetime
 import locale
+import os
 
 locale.setlocale(locale.LC_ALL, "portuguese_brazil")
 
@@ -123,29 +124,28 @@ def check_empty_df(*args):
 
     return df_empty
 
-def loader_transactions():
-    try:
-        loader.local_transactions()
-    except FileNotFoundError:
+def check_transactions():
+    if not os.path.exists(loader.LOCAL_TRANSACTIONS):
         creator.create_local_transactions()
 
-def loader_categories():
-    try:
-        loader.local_categories()
-    except FileNotFoundError:
+def check_categories():
+    if not os.path.exists(loader.LOCAL_CATEGORIES):
         creator.create_local_categories()
 
-def loader_accounts():
-    try:
-        loader.local_accounts()
-    except FileNotFoundError:
+def check_accounts():
+    if not os.path.exists(loader.LOCAL_ACCOUNTS):
         creator.create_local_accounts()
 
-def loader_credit_cards():
-    try:
-        loader.local_credit_cards()
-    except FileNotFoundError:
+def check_credit_cards():
+    if not os.path.exists(loader.LOCAL_CREDIT_CARDS):
         creator.create_local_credit_cards()
+
+def check_data():
+    check_accounts()
+    check_categories()
+    check_credit_cards()
+    check_transactions()
+        
 
 def saver_local_transaction(transaction):
     try:

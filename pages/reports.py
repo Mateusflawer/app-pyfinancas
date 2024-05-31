@@ -1,6 +1,6 @@
 import streamlit as st
 from utils import helpers
-from data import loader
+from data import loader, controller
 
 st.set_page_config("Relatórios", "📄", "wide",)
 
@@ -9,6 +9,10 @@ def main():
 
     st.title("Bem vindo aos Relatórios!")
 
+    # Sempre checar se os arquvos dos dados existem antes de carrega-los
+    controller.check_data()
+
+    # Carregando dados após checar que existem os arquivos
     df_transactions = loader.local_transactions()
     df_categories = loader.local_categories()
     df_accounts = loader.local_accounts()
