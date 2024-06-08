@@ -4,6 +4,58 @@ from data import loader, controller
 
 st.set_page_config("Relatórios", "📄", "wide",)
 
+def transactions_screen():
+    st.subheader("Transações")
+    df_transactions = loader.local_transactions()
+    df_transactions["Data"] = df_transactions["Data"].apply(helpers.format_data_br)
+    st.dataframe(df_transactions, hide_index=True, use_container_width=True)
+    col_registrar, col_deletar, col_editar = st.columns(3)
+    
+    if col_registrar.button("➕ Registrar", key="register_transaction"):
+        helpers.dialog_register_transaction()
+
+    if col_deletar.button("❌ Deletar", key="delete_transaction"):
+        helpers.dialog_delete_transaction_line()
+
+def categories_screen():
+    st.subheader("Categorias")
+    df_categories = loader.local_categories()
+    df_categories["Data"] = df_categories["Data"].apply(helpers.format_data_br)
+    st.dataframe(df_categories, hide_index=True, use_container_width=True)
+    col_registrar, col_deletar, col_editar = st.columns(3)
+    
+    if col_registrar.button("➕ Registrar", key="register_categorie"):
+        helpers.dialog_register_categorie()
+
+    if col_deletar.button("❌ Deletar", key="delete_categorie"):
+        helpers.dialog_delete_categorie_line()
+            
+def accounts_screen():
+    st.subheader("Contas")
+    df_accounts = loader.local_accounts()
+    df_accounts["Data"] = df_accounts["Data"].apply(helpers.format_data_br)
+    st.dataframe(df_accounts, hide_index=True, use_container_width=True)
+    col_registrar, col_deletar, col_editar = st.columns(3)
+
+    if col_registrar.button("➕ Registrar", key="register_account"):
+        helpers.dialog_register_account()
+
+    if col_deletar.button("❌ Deletar", key="delete_account"):
+        helpers.dialog_delete_account_line()
+
+def credit_card_screen():
+    st.subheader("Cartões de Crédito")
+    df_credit_cards = loader.local_credit_cards()
+    df_credit_cards["Data"] = df_credit_cards["Data"].apply(helpers.format_data_br)
+    st.dataframe(df_credit_cards, hide_index=True, use_container_width=True)
+    col_registrar, col_deletar, col_editar = st.columns(3)
+    
+    if col_registrar.button("➕ Registrar", key="register_credit_card"):
+        helpers.dialog_register_credit_card()
+
+    if col_deletar.button("❌ Deletar", key="delete_credit_card"):
+        helpers.dialog_delete_credit_card_line()
+
 def main():
     helpers.menu()
 
@@ -13,46 +65,22 @@ def main():
     controller.check_data()
 
     # Carregando dados após checar que existem os arquivos
-    df_transactions = loader.local_transactions()
-    df_categories = loader.local_categories()
-    df_accounts = loader.local_accounts()
-    df_credit_cards = loader.local_credit_cards()
 
     col1, col2 = st.columns(2)
 
     with col1:
-        with st.container(border=True):
-            st.subheader("Transações")
-            df_transactions["Data"] = df_transactions["Data"].apply(helpers.format_data_br)
-            st.dataframe(df_transactions, hide_index=True, use_container_width=True)
-            col_registrar, col_deletar, col_editar = st.columns(3)
-            if col_registrar.button("Registrar Transação", type="primary"):
-                helpers.dialog_register_transaction()
+        with st.container(border=True): 
+            transactions_screen()
 
-            if col_deletar.button("Deletar Transação", type="primary"):
-                helpers.dialog_delete_transaction_line()
-        
-        with st.container(border=True):
-            st.subheader("Categorias")
-            df_categories["Data"] = df_categories["Data"].apply(helpers.format_data_br)
-            st.dataframe(df_categories, hide_index=True, use_container_width=True)
-            if st.button("Registrar Categoria", type="primary"):
-                helpers.dialog_register_categorie()
+        with st.container(border=True): 
+            categories_screen()
 
     with col2:
-        with st.container(border=True):
-            st.subheader("Contas")
-            df_accounts["Data"] = df_accounts["Data"].apply(helpers.format_data_br)
-            st.dataframe(df_accounts, hide_index=True, use_container_width=True)
-            if st.button("Registrar Conta", type="primary"):
-                helpers.dialog_register_account()
-    
-        with st.container(border=True):
-            st.subheader("Cartões de Crédito")
-            df_credit_cards["Data"] = df_credit_cards["Data"].apply(helpers.format_data_br)
-            st.dataframe(df_credit_cards, hide_index=True, use_container_width=True)
-            if st.button("Registrar Cartão de Crédito", type="primary"):
-                helpers.dialog_register_credit_card()
+        with st.container(border=True): 
+            accounts_screen()
+
+        with st.container(border=True): 
+            credit_card_screen()
 
 if __name__ == "__main__":
     main()

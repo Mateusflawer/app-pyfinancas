@@ -15,32 +15,32 @@ def menu():
 
 @st.experimental_dialog("Registrar Transação")
 def dialog_register_transaction():
+    with st.container(height=400):
+        with st.spinner("Carregando dados..."):
+            df_categories = loader.local_categories()
+            df_accounts = loader.local_accounts()
+            df_credit_cards = loader.local_credit_cards()
 
-    with st.spinner("Carregando dados..."):
-        df_categories = loader.local_categories()
-        df_accounts = loader.local_accounts()
-        df_credit_cards = loader.local_credit_cards()
+        transaction = controller.Transaction()
 
-    transaction = controller.Transaction()
+        transaction.descricao = st.text_area("Descrição")
 
-    transaction.descricao = st.text_area("Descrição")
+        transaction.tipo = st.selectbox("Tipo", TIPOS)
+        
+        if transaction.tipo == "Entradas":
+            categorias = df_categories[df_categories["Tipo"]=="Entradas"]["Nome"].unique()
+        else:
+            categorias = df_categories[df_categories["Tipo"]=="Despesas"]["Nome"].unique()
 
-    transaction.tipo = st.selectbox("Tipo", TIPOS)
-    
-    if transaction.tipo == "Entradas":
-        categorias = df_categories[df_categories["Tipo"]=="Entradas"]["Nome"].unique()
-    else:
-        categorias = df_categories[df_categories["Tipo"]=="Despesas"]["Nome"].unique()
+        transaction.categoria = st.selectbox("Categoria", categorias)
+        credito = st.toggle("Crédito?")
+        if credito:
+            transaction.credit_card = st.selectbox("Cartão de crédito", df_credit_cards["Nome"].unique())
+        else:
+            transaction.conta = st.selectbox("Conta", df_accounts["Nome"].unique())
 
-    transaction.categoria = st.selectbox("Categoria", categorias)
-    credito = st.toggle("Crédito?")
-    if credito:
-        transaction.credit_card = st.selectbox("Cartão de crédito", df_credit_cards["Nome"].unique())
-    else:
-        transaction.conta = st.selectbox("Conta", df_accounts["Nome"].unique())
-
-    transaction.data = st.date_input("Data", format="DD/MM/YYYY")
-    transaction.valor = st.number_input("Valor")
+        transaction.data = st.date_input("Data", format="DD/MM/YYYY")
+        transaction.valor = st.number_input("Valor")
 
     if st.button("Salvar"):
         controller.saver_local_transaction(transaction)
@@ -48,7 +48,6 @@ def dialog_register_transaction():
 
 @st.experimental_dialog("Registrar Categoria")
 def dialog_register_categorie():
-
     categorie = controller.Categorie()
     categorie.nome = st.text_input("Nome")
     categorie.tipo = st.selectbox("Tipo", TIPOS)
@@ -62,7 +61,6 @@ def dialog_register_categorie():
 
 @st.experimental_dialog("Registrar Conta")
 def dialog_register_account():
-
     account = controller.Account()
     account.nome = st.text_input("Nome")
 
@@ -75,7 +73,6 @@ def dialog_register_account():
 
 @st.experimental_dialog("Registrar Cartão de Crédito")
 def dialog_register_credit_card():
-
     credit_card = controller.CreditCard()
     credit_card.nome = st.text_input("Nome")
 
@@ -98,7 +95,7 @@ def format_data_br(data):
         data_str = data_datetime.strftime(formato_br)
         return data_str
     
-@st.experimental_dialog("Excluir transação")
+@st.experimental_dialog("Excluir transação", width="large")
 def dialog_delete_transaction_line():
     df = loader.local_transactions()
 
@@ -113,3 +110,50 @@ def dialog_delete_transaction_line():
         saver.local_transaction(df_result)
         st.rerun()
     
+
+@st.experimental_dialog("Excluir categoria", width="large")
+def dialog_delete_categorie_line():
+    df = loader.local_categories()
+
+    if not "Excluir" in df.columns:
+        df.insert(0, "Excluir", False)
+
+    df_result = st.data_editor(df, use_container_width=True, hide_index=True)
+    
+    if st.button("Excluir"):
+        df_result = df_result[df_result["Excluir"]!=True]
+        df_result = df_result.drop(columns=["Excluir"])
+        saver.local_categorie(df_result)
+        st.rerun()
+
+
+@st.experimental_dialog("Excluir conta", width="large")
+def dialog_delete_account_line():
+    df = loader.local_accounts()
+
+    if not "Excluir" in df.columns:
+        df.insert(0, "Excluir", False)
+
+    df_result = st.data_editor(df, use_container_width=True, hide_index=True)
+    
+    if st.button("Excluir"):
+        df_result = df_result[df_result["Excluir"]!=True]
+        df_result = df_result.drop(columns=["Excluir"])
+        saver.local_account(df_result)
+        st.rerun()
+
+
+@st.experimental_dialog("Excluir cartão de crédito", width="large")
+def dialog_delete_credit_card_line():
+    df = loader.local_credit_cards()
+
+    if not "Excluir" in df.columns:
+        df.insert(0, "Excluir", False)
+
+    df_result = st.data_editor(df, use_container_width=True, hide_index=True)
+    
+    if st.button("Excluir"):
+        df_result = df_result[df_result["Excluir"]!=True]
+        df_result = df_result.drop(columns=["Excluir"])
+        saver.local_credit_card(df_result)
+        st.rerun()
