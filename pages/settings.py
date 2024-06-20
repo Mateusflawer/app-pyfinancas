@@ -1,5 +1,8 @@
 import streamlit as st
 import utils
+import locale
+
+locale.setlocale(locale.LC_ALL, "portuguese_brazil")
 
 def main():
     utils.helpers.menu()
