@@ -1,15 +1,17 @@
-import streamlit as st
 import pandas as pd
-import data
+from data import creator
+from pathlib import Path
+
+ROOT_DIR = Path(__file__)
 
 # CSS
-LOCAL_CSS = "app-pyfinancas\\assets\\styles.css"
+LOCAL_CSS = ROOT_DIR.parent.parent / "assets" / "css" / "styles.css"
 
 # CSV's
-LOCAL_TRANSACTIONS = data.creator.LOCAL_TRANSACTIONS
-LOCAL_CATEGORIES = data.creator.LOCAL_CATEGORIES
-LOCAL_ACCOUNTS = data.creator.LOCAL_ACCOUNTS
-LOCAL_CREDIT_CARDS = data.creator.LOCAL_CREDIT_CARDS
+LOCAL_TRANSACTIONS = creator.LOCAL_TRANSACTIONS
+LOCAL_CATEGORIES = creator.LOCAL_CATEGORIES
+LOCAL_ACCOUNTS = creator.LOCAL_ACCOUNTS
+LOCAL_CREDIT_CARDS = creator.LOCAL_CREDIT_CARDS
 
 # Função para ler o arquivo CSS
 def local_css():

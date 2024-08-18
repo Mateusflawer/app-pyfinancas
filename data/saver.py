@@ -1,8 +1,11 @@
+from data import creator
+
 # CSV's
-LOCAL_TRANSACTIONS = "app-pyfinancas\\data\\transactions.csv"
-LOCAL_CATEGORIES = "app-pyfinancas\\data\\categories.csv"
-LOCAL_ACCOUNTS = "app-pyfinancas\\data\\accounts.csv"
-LOCAL_CREDIT_CARDS = "app-pyfinancas\\data\\credit_cards.csv"
+LOCAL_TRANSACTIONS = creator.LOCAL_TRANSACTIONS
+LOCAL_CATEGORIES = creator.LOCAL_CATEGORIES
+LOCAL_ACCOUNTS = creator.LOCAL_ACCOUNTS
+LOCAL_CREDIT_CARDS = creator.LOCAL_CREDIT_CARDS
+
 
 def local_transaction(df_transaction):
     df_transaction.to_csv(LOCAL_TRANSACTIONS, sep=";", index=False)

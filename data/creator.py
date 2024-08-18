@@ -1,10 +1,13 @@
 import pandas as pd
+from pathlib import Path
+
+ROOT_DIR = Path(__file__)
 
 # CSV's
-LOCAL_TRANSACTIONS = "app-pyfinancas\\data\\transactions.csv"
-LOCAL_CATEGORIES = "app-pyfinancas\\data\\categories.csv"
-LOCAL_ACCOUNTS = "app-pyfinancas\\data\\accounts.csv"
-LOCAL_CREDIT_CARDS = "app-pyfinancas\\data\\credit_cards.csv"
+LOCAL_TRANSACTIONS = ROOT_DIR.parent / "transactions.csv"
+LOCAL_CATEGORIES = ROOT_DIR.parent / "categories.csv"
+LOCAL_ACCOUNTS = ROOT_DIR.parent / "accounts.csv"
+LOCAL_CREDIT_CARDS = ROOT_DIR.parent / "credit_cards.csv"
 
 TRANSACTION_TEMPLATE = {
     "Data": [],
