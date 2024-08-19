@@ -1,12 +1,12 @@
 from streamlit_extras.metric_cards import style_metric_cards
-import plotly.graph_objects as go
-from utils import calculations
-import plotly.express as px
 from data import controller
+from utils import calculations
+import plotly.graph_objects as go
+import plotly.express as px
 import streamlit as st
 
-ENTRADA = controller.TIPOS[0] # Entrada
-DESPESAS = controller.TIPOS[1] # Despesas
+ENTRADA = "Entrada"
+DESPESA = "Despesa"
 
 def metrics(df):
     """Metricas"""
@@ -29,42 +29,48 @@ def metrics(df):
 
 def entries_by_categories(df):
     """Entradas por categorias"""
+    
     with st.container(border=True):
         # Gráfico de entradas por categoria
-        fig_entradas = px.bar(df[df['Tipo'] == ENTRADA], x='Categoria', y='Valor', title='Entradas por Categoria',
-                        labels={'Valor': 'Valor (R$)'}, color='Categoria',
+        fig_entradas = px.bar(df[df['tipo'] == ENTRADA], x='categoria', y='valor', title='Entradas por categoria',
+                        labels={'valor': 'valor (R$)'}, color='categoria',
                         color_discrete_sequence=px.colors.qualitative.Pastel)
         st.plotly_chart(fig_entradas)
 
 
 def monthly_evolution(df):
     """Evolução mensal"""
+
+    if controller.check_empty_df(df):
+        st.toast("Sem metrica para analisar", icon="📓")
+        return
+
     with st.container(border=True):
         # Agrupando os dados para o gráfico de evolução mensal
-        df_entradas = df[df['Tipo'] == ENTRADA].groupby('Data').sum().reset_index()
-        df_despesas = df[df['Tipo'] == DESPESAS].groupby('Data').sum().reset_index()
-        df_entradas['Saldo Acumulado'] = df_entradas['Valor'].cumsum() - df_despesas['Valor'].cumsum()
+        df_entradas = df[df['tipo'] == ENTRADA].groupby('data').sum().reset_index()
+        df_despesas = df[df['tipo'] == DESPESA].groupby('data').sum().reset_index()
+        df_entradas['Saldo Acumulado'] = df_entradas['valor'].cumsum() - df_despesas['valor'].cumsum()
         fig = go.Figure()
 
         # Adicionando barras para Entradas
         fig.add_trace(go.Bar(
-            x=df_entradas['Data'],
-            y=df_entradas['Valor'],
+            x=df_entradas['data'],
+            y=df_entradas['valor'],
             name=ENTRADA,
             marker_color='rgb(55, 83, 109)'
         ))
 
         # Adicionando barras para Despesas
         fig.add_trace(go.Bar(
-            x=df_despesas['Data'],
-            y=df_despesas['Valor'],
-            name=DESPESAS,
+            x=df_despesas['data'],
+            y=df_despesas['valor'],
+            name=DESPESA,
             marker_color='rgb(26, 118, 255)'
         ))
 
         # Adicionando linha para Saldo Acumulado
         fig.add_trace(go.Scatter(
-            x=df_entradas['Data'],
+            x=df_entradas['data'],
             y=df_entradas['Saldo Acumulado'],
             mode='lines+markers',
             name='Saldo Acumulado',
@@ -76,7 +82,7 @@ def monthly_evolution(df):
             title='Evolução Mensal de Entradas vs Despesas',
             xaxis_tickfont_size=14,
             yaxis=dict(
-                title='Valor (R$)',
+                title='valor (R$)',
                 titlefont_size=16,
                 tickfont_size=14,
             ),
@@ -96,9 +102,14 @@ def monthly_evolution(df):
 
 def expenses_by_categories(df):
     """Despesas por categoria"""
+
+    if controller.check_empty_df(df):
+        st.toast("Sem metrica para analisar", icon="📓")
+        return
+    
     with st.container(border=True):
         # Gráfico de despesas por categoria
-        fig_despesas = px.pie(df[df['Tipo'] == DESPESAS], names='Categoria', values='Valor', title='Despesas por Categoria',
+        fig_despesas = px.pie(df[df['tipo'] == DESPESA], names='categoria', values='valor', title='Despesas por categoria',
                         color_discrete_sequence=px.colors.qualitative.Pastel)
         fig_despesas.update_traces(textinfo='percent+label')
         st.plotly_chart(fig_despesas)
