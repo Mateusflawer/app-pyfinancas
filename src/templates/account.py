@@ -45,5 +45,5 @@ def add_account():
     account.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
     if st.button("Salvar"):
-        controller.saver_local_account(account)
+        controller.insert_accounts_rows(account.dataframe)
         st.rerun()

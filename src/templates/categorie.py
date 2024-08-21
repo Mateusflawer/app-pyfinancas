@@ -47,5 +47,5 @@ def add_categorie():
     categorie.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
     if st.button("Salvar"):
-        controller.saver_local_categorie(categorie)
+        controller.insert_categories_rows(categorie.dataframe)
         st.rerun()

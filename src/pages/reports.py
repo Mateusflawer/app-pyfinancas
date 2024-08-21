@@ -16,13 +16,6 @@ def main():
 
     sidebar.menu()
 
-    st.header("Bem vindo aos Relatórios!")
-
-    # Sempre checar se os arquvos dos dados existem antes de carrega-los
-    if controller.check_empty_df(None):
-        st.toast("Sem dados para analisar", icon="🚨")
-        st.stop()
-
     # Carregando dados após checar que existem os arquivos
 
     t_transaction, t_categorie, t_account, t_credit_card = st.tabs(TABS)

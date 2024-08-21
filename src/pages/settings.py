@@ -7,7 +7,6 @@ locale.setlocale(locale.LC_ALL, "portuguese_brazil")
 def main():
     sidebar.menu()
 
-    st.header("Bem vindo as Configurações!")
     st.toast("Em desenvolvimento...", icon="⚙️")
 
 if __name__ == "__main__":

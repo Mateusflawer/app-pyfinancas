@@ -5,54 +5,54 @@ import pandas as pd
 import datetime
 
 # PASTA DO PROJETO
-LOCAL_ROOT_DIR = Path(__file__).parent.parent
+ROOT_DIR = Path(__file__).parent.parent
 
-LOCAL_DATA_DIR = LOCAL_ROOT_DIR / "src" / "data"
-LOCAL_DATABASE = LOCAL_DATA_DIR / "database.db"
+DATA_DIR = ROOT_DIR / "src" / "data"
+DATABASE = DATA_DIR / "database.db"
 
-# Conecte-se ao banco de dados (ou crie um novo se não existir)
-conn = sqlite3.connect(LOCAL_DATABASE)
+def creat_table(query: str):
+    # Conecte-se ao banco de dados (ou crie um novo se não existir)
+    conn = sqlite3.connect(DATABASE)
 
-# Crie um cursor para executar comandos SQL
-cursor = conn.cursor()
+    # Crie um cursor para executar comandos SQL
+    cursor = conn.cursor()
 
-# Data;Categoria;Tipo;Conta;Cartão de Crédito;Valor;Descricao
+    # Crie uma tabela
+    cursor.execute(query)
 
-# Crie uma tabela
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS transactions (
-    id INTEGER PRIMARY KEY,
-    data DATETIME, 
-    categoria TEXT, 
-    tipo TEXT, 
-    conta TEXT, 
-    cartao TEXT,
-    valor FLOAT, 
-    descricao TEXT
-)
-""")
+    # cursor.execute("""
+    # INSERT INTO transactions (data, categoria, tipo, conta, cartao, valor, descricao) 
+    # VALUES ('data', 'c', 't', 'c', 'c', '1', 'd')
+    # """)
 
-data = datetime.datetime.now()
+    # Confirmar alterações
+    conn.commit()
 
-cursor.execute(f"""
-INSERT INTO transactions (data, categoria, tipo, conta, cartao, valor, descricao) 
-VALUES ('{data}', 'c', 't', 'c', 'c', '1', 'd')
-""")
+    # # Realize uma consulta
+    # cursor.execute("SELECT * FROM transactions")
 
-# Confirmar alterações
-conn.commit()
+    # transactions = cursor.fetchall()
+    # df = pd.DataFrame(transactions)
+    # colunas = [description[0] for description in cursor.description]
+    # df.columns = colunas
+    # st.dataframe(df.infer_objects())
 
-# Realize uma consulta
-cursor.execute("SELECT * FROM transactions")
+    # Feche a conexão
+    cursor.close()
+    conn.close()
+    
 
-transactions = cursor.fetchall()
-df = pd.DataFrame(transactions)
-colunas = [description[0] for description in cursor.description]
-df.columns = colunas
-st.dataframe(df.infer_objects())
-
-if st.button("Atualizar"):
-    pass
-
-# Feche a conexão
-conn.close()
+if __name__ == "__main__":
+    query = """
+    CREATE TABLE IF NOT EXISTS transactions (
+        id INTEGER PRIMARY KEY,
+        data DATETIME, 
+        categoria TEXT, 
+        tipo TEXT, 
+        conta TEXT, 
+        cartao TEXT,
+        valor FLOAT, 
+        descricao TEXT
+    )
+    """
+    creat_table(query)

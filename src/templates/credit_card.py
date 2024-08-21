@@ -48,5 +48,6 @@ def add_credit_card():
     credit_card.limite = st.number_input("Limite", step=10)
 
     if st.button("Salvar"):
-        controller.saver_local_credit_card(credit_card)
+        controller.insert_credit_cards_rows(credit_card.dataframe)
         st.rerun()
+        

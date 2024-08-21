@@ -1,4 +1,5 @@
 from templates import account, categorie, credit_card, transaction
+from data import creator, loader, saver
 from pathlib import Path
 import pandas as pd
 import datetime
@@ -147,3 +148,104 @@ def check_empty_df(*args) -> bool:
 
     return df_empty
 
+
+def create_transactions_table():
+    query = """
+    CREATE TABLE IF NOT EXISTS transactions (
+        id INTEGER PRIMARY KEY, 
+        data DATETIME, 
+        categoria TEXT, 
+        tipo TEXT, 
+        conta TEXT, 
+        cartao TEXT, 
+        valor FLOAT, 
+        descricao TEXT 
+    )
+    """
+    creator.create_table(query)
+    
+    
+def create_categories_table():
+    query = """
+    CREATE TABLE IF NOT EXISTS categories (
+        id INTEGER PRIMARY KEY, 
+        data DATETIME, 
+        nome TEXT, 
+        tipo TEXT
+    )
+    """
+    creator.create_table(query)
+    
+    
+def create_accounts_table():
+    query = """
+    CREATE TABLE IF NOT EXISTS accounts (
+        id INTEGER PRIMARY KEY,
+        data DATETIME, 
+        nome TEXT
+    )
+    """
+    creator.create_table(query)
+    
+    
+def create_credit_cards_table():
+    query = """
+    CREATE TABLE IF NOT EXISTS credit_cards (
+        id INTEGER PRIMARY KEY, 
+        data DATETIME, 
+        nome TEXT, 
+        fechamento DATETIME, 
+        venvimento DATETIME, 
+        limite FLOAT
+    )
+    """
+    creator.create_table(query)
+
+
+def load_transactions_per_period(start_date: datetime, end_date: datetime) -> pd.DataFrame:
+    """Ler as transações por período"""
+    df = loader.load_per_period("transactions", start_date, end_date)
+    return df
+
+
+def load_categories_per_period(start_date: datetime, end_date: datetime) -> pd.DataFrame:
+    """Ler as categorias por período"""
+    df = loader.load_per_period("categories", start_date, end_date)
+    return df
+
+
+def load_accounts_per_period(start_date: datetime, end_date: datetime) -> pd.DataFrame:
+    """Ler as contas por período"""
+    df = loader.load_per_period("accounts", start_date, end_date)
+    return df
+
+
+def load_credit_cards_per_period(start_date: datetime, end_date: datetime) -> pd.DataFrame:
+    """Ler os cartões por período"""
+    df = loader.load_per_period("credit_cards", start_date, end_date)
+    return df
+
+
+def insert_transactions_rows(df: pd.DataFrame):
+    saver.insert_rows("transactions", df)
+    
+    
+def insert_categories_rows(df: pd.DataFrame):
+    saver.insert_rows("categories", df)
+    
+    
+def insert_accounts_rows(df: pd.DataFrame):
+    saver.insert_rows("accounts", df)
+    
+    
+def insert_credit_cards_rows(df: pd.DataFrame):
+    saver.insert_rows("credit_cards", df)
+    
+
+def create_period(days: int):
+    inicio, fim = datetime.datetime.now() - datetime.timedelta(days=days), datetime.datetime.now()
+    return inicio, fim
+
+if __name__ == "__main__":
+    create_transactions_table()
+    

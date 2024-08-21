@@ -1,16 +1,55 @@
 import pandas as pd
-from data import creator
 from pathlib import Path
+from datetime import datetime, timedelta
+import sqlite3
 
 ROOT_DIR = Path(__file__).parent.parent
 
 # CSS
 LOCAL_CSS = ROOT_DIR / "assets" / "css" / "styles.css"
+DATABASE = ROOT_DIR / "data" / "database.db"
 
 # Função para ler o arquivo CSS
 def local_css():
     with open(LOCAL_CSS) as f:
         return f'<style>{f.read()}</style>'
+
+
+def adapt_datetime(dt):
+    return dt.strftime('%Y-%m-%d %H:%M:%S')
+
+
+def convert_datetime(s):
+    return datetime.strptime(s.decode(), '%Y-%m-%d %H:%M:%S')
+
+
+# Ler transações
+def load_per_period(table: str, start_date: datetime, end_date: datetime) -> pd.DataFrame:
+    # Adaptadores personalizados para datetime
+    sqlite3.register_adapter(datetime, adapt_datetime)
+    sqlite3.register_converter("datetime", convert_datetime)
+    
+    # Conecte ao banco de dados com os adaptadores registrados
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    
+    query = f"""
+        SELECT * FROM {table} 
+        WHERE data BETWEEN ? AND ? 
+    """
+    cursor.execute(query, (start_date, end_date))
+    
+    description = cursor.description
+    columns = [descript[0] for descript in description]
+    transactions = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+
+    # Converte os resultados em um DataFrame do pandas
+    df = pd.DataFrame(transactions, columns=columns)
+    return df
+
 
 # Carrega exemplo de transações
 def example_transactions():
@@ -42,3 +81,9 @@ def example_transactions():
     # Criação do DataFrame
     df = pd.DataFrame(data_expanded)
     return df
+
+
+if __name__ == "__main__":
+    df = load_per_period("transactions", datetime.now() - timedelta(days=1), datetime.now())
+    print(df)
+    

@@ -1,5 +1,5 @@
 import streamlit as st
-from data import controller, loader, saver
+from data import controller
 from utils import helpers
 
 
@@ -10,7 +10,7 @@ def dialog_register_transaction():
 
 @st.dialog("Excluir transação", width="large")
 def dialog_delete_transaction_line():
-    df = loader.local_transactions()
+    df = controller.load_transactions_per_period(controller.create_period(1))
 
     if not "Excluir" in df.columns:
         df.insert(0, "Excluir", False)
@@ -20,13 +20,12 @@ def dialog_delete_transaction_line():
     if st.button("Excluir"):
         df_result = df_result[df_result["Excluir"]!=True]
         df_result = df_result.drop(columns=["Excluir"])
-        saver.local_transaction(df_result)
         st.rerun()
 
 
 def transactions_screen():
     st.subheader("Transações")
-    df_transactions = loader.local_transactions()
+    df_transactions = controller.load_transactions_per_period(*controller.create_period(1))
     df_transactions["Data"] = df_transactions["Data"].apply(helpers.format_data_br)
     st.dataframe(df_transactions, hide_index=True, use_container_width=True)
     col_registrar, col_deletar, col_editar = st.columns(3)
@@ -41,9 +40,9 @@ def transactions_screen():
 def add_transation():
     with st.container(height=400):
         with st.spinner("Carregando dados..."):
-            df_categories = loader.local_categories()
-            df_accounts = loader.local_accounts()
-            df_credit_cards = loader.local_credit_cards()
+            df_categories = controller.load_categories_per_period(controller.create_period(1))
+            df_accounts = controller.load_accounts_per_period(controller.create_period(1))
+            df_credit_cards = controller.load_credit_cards_per_period(controller.create_period(1))
 
         transaction = controller.Transaction()
 
@@ -72,5 +71,5 @@ def add_transation():
         transaction.valor = st.number_input("Valor")
 
     if st.button("Salvar"):
-        controller.saver_local_transaction(transaction)
+        controller.insert_transactions_rows(transaction.dataframe)
         st.rerun()
