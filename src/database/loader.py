@@ -5,15 +5,7 @@ import sqlite3
 
 ROOT_DIR = Path(__file__).parent.parent
 
-# CSS
-LOCAL_CSS = ROOT_DIR / "assets" / "css" / "styles.css"
-DATABASE = ROOT_DIR / "data" / "database.db"
-
-# Função para ler o arquivo CSS
-def local_css():
-    with open(LOCAL_CSS) as f:
-        return f'<style>{f.read()}</style>'
-
+DATABASE = ROOT_DIR / "database" / "database.db"
 
 def adapt_datetime(dt):
     return dt.strftime('%Y-%m-%d %H:%M:%S')

@@ -1,5 +1,4 @@
 import locale
-from data import controller
 
 locale.setlocale(locale.LC_ALL, "pt-br")
 

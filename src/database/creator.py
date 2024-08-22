@@ -3,7 +3,7 @@ import sqlite3
 
 
 ROOT_DIR = Path(__file__).parent.parent
-DATABASE = ROOT_DIR / "data" / "database.db"
+DATABASE = ROOT_DIR / "database" / "database.db"
 
 
 def create_table(query: str):

@@ -1,5 +1,4 @@
-from templates import account, categorie, credit_card, transaction
-from data import creator, loader, saver
+from database import creator, loader, saver
 from pathlib import Path
 import pandas as pd
 import datetime
@@ -8,6 +7,11 @@ import locale
 locale.setlocale(locale.LC_ALL, "portuguese_brazil")
 
 ROOT_DIR = Path(__file__).parent.parent
+
+ENTRADA = "Entrada"
+DESPESA = "Despesa"
+
+TIPOS = (ENTRADA, DESPESA)
 
 
 class Transaction:
@@ -44,7 +48,7 @@ class Transaction:
     
     @classmethod
     def add_transaction(cls):
-        transaction.add_transation()
+        pass
 
 
 class Categorie:
@@ -73,7 +77,7 @@ class Categorie:
     
     @classmethod
     def add_categorie(cls):
-        categorie.add_categorie()
+        pass
     
 
 class Account:
@@ -100,7 +104,7 @@ class Account:
     
     @classmethod
     def add_account(cls):
-        account.add_account()
+        pass
     
 
 class CreditCard:
@@ -133,7 +137,7 @@ class CreditCard:
     
     @classmethod
     def add_credit_card(cls):
-        credit_card.add_credit_card()
+        pass
 
 
 # Caminhos de arquivos
@@ -240,11 +244,6 @@ def insert_accounts_rows(df: pd.DataFrame):
     
 def insert_credit_cards_rows(df: pd.DataFrame):
     saver.insert_rows("credit_cards", df)
-    
-
-def create_period(days: int):
-    inicio, fim = datetime.datetime.now() - datetime.timedelta(days=days), datetime.datetime.now()
-    return inicio, fim
 
 if __name__ == "__main__":
     create_transactions_table()

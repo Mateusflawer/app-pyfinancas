@@ -1,5 +1,4 @@
-from templates import transaction, account, categorie, credit_card, sidebar
-from data import controller
+from templates import reports_tables, sidebar
 import streamlit as st
 import locale
 
@@ -22,19 +21,19 @@ def main():
 
     with t_transaction:
         with st.container(border=True): 
-            transaction.transactions_screen()
+            reports_tables.transactions_screen()
 
     with t_categorie:
         with st.container(border=True): 
-            categorie.categories_screen()
+            reports_tables.categories_screen()
 
     with t_account:
         with st.container(border=True): 
-            account.accounts_screen()
+            reports_tables.accounts_screen()
 
     with t_credit_card:
         with st.container(border=True): 
-            credit_card.credit_card_screen()
+            reports_tables.credit_card_screen()
 
 if __name__ == "__main__":
     # Configurações da página

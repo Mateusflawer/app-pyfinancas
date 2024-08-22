@@ -1,6 +1,4 @@
-from streamlit_extras.metric_cards import style_metric_cards
-from data import controller
-from utils import calculations
+from database import controller
 import plotly.graph_objects as go
 import plotly.express as px
 import streamlit as st
@@ -8,23 +6,7 @@ import streamlit as st
 ENTRADA = "Entrada"
 DESPESA = "Despesa"
 
-def metrics(df):
-    """Metricas"""
-    saldo, entradas, despesas = calculations.dashboard_metrics(df)
 
-    # Metricas
-    col_saldo, col_entradas, col_despesas = st.columns(3)
-
-    with col_saldo:
-        st.metric("Saldo", saldo)
-
-    with col_entradas:
-        st.metric("Entradas", entradas)
-
-    with col_despesas:
-        st.metric("Despesas", despesas)
-
-    style_metric_cards(background_color='auto')
 
 
 def entries_by_categories(df):

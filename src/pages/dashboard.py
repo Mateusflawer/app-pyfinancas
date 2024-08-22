@@ -1,8 +1,8 @@
 from templates import sidebar, dashboard
-from data import controller
+from utils import datetime_helpers
+from database import controller
 import streamlit as st
 import locale
-from datetime import datetime, timedelta
 
 locale.setlocale(locale.LC_ALL, "portuguese_brazil")
 
@@ -11,7 +11,7 @@ def main():
     sidebar.menu()
 
     # df = loader.example_transactions()
-    df = controller.load_transactions_per_period(*controller.create_period(1))
+    df = controller.load_transactions_per_period(*datetime_helpers.create_period(1))
 
     # Sem dados para gerar gráficos
     if controller.check_empty_df(df):
