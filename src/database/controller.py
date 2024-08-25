@@ -86,30 +86,6 @@ def create_credit_cards_table():
     creator.create_table(query)
 
 
-def load_transactions_per_period(start_date: datetime, end_date: datetime) -> pd.DataFrame:
-    """Ler as transações por período"""
-    df = loader.load_per_period(TRANSACTIONS, start_date, end_date)
-    return df
-
-
-def load_categories_per_period(start_date: datetime, end_date: datetime) -> pd.DataFrame:
-    """Ler as categorias por período"""
-    df = loader.load_per_period(CATEGORIES, start_date, end_date)
-    return df
-
-
-def load_accounts_per_period(start_date: datetime, end_date: datetime) -> pd.DataFrame:
-    """Ler as contas por período"""
-    df = loader.load_per_period(ACCOUNTS, start_date, end_date)
-    return df
-
-
-def load_credit_cards_per_period(start_date: datetime, end_date: datetime) -> pd.DataFrame:
-    """Ler os cartões por período"""
-    df = loader.load_per_period(CREDIT_CARDS, start_date, end_date)
-    return df
-
-
 def insert_transactions_rows(df: pd.DataFrame):
     saver.insert_rows(TRANSACTIONS, df)
     
@@ -155,6 +131,36 @@ def delete_rows_accounts_by_id(ids: list):
     
 def delete_rows_credit_cards_by_id(ids: list):
     delete.delete_rows_by_id(CREDIT_CARDS, ids)
+
+
+def load_years_transactions():
+    df = loader.load_years(TRANSACTIONS)
+    return df
+
+
+def load_months_transactions_by_year(year: str):
+    df = loader.load_months_by_year(TRANSACTIONS, year)
+    return df
+
+
+def load_transactions_by_year_and_selected_months(year: str, months: list):
+    df = loader.load_data_by_year_and_selected_months(TRANSACTIONS, year, months)
+    return df
+    
+
+def load_categories():
+    df = loader.load_data(CATEGORIES)
+    return df
+
+
+def load_accounts():
+    df = loader.load_data(ACCOUNTS)
+    return df
+
+
+def load_credit_cards():
+    df = loader.load_data(CREDIT_CARDS)
+    return df
 
 
 if __name__ == "__main__":

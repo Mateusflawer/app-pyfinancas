@@ -15,10 +15,10 @@ def transaction_line():
         credit = col_credit.toggle("Crédito")
         transaction.efetivada = col_efetivada.toggle("Efetivada", value=True)
         
-        if not credit:
-            transaction.tipo = st.selectbox("Tipo", tipos)
+        if credit:
+            transaction.tipo = st.selectbox("Tipo", [controller.DESPESA], disabled=credit)
         else:
-            transaction.tipo = "Despesa"
+            transaction.tipo = st.selectbox("Tipo", tipos, disabled=credit)
 
         categories = controller.load_nome_categories_by_tipo(transaction.tipo)
         transaction.categoria = st.selectbox("Categoria", categories)
@@ -33,8 +33,13 @@ def transaction_line():
         transaction.data = st.date_input("Data", format="DD/MM/YYYY")
         transaction.valor = st.number_input("Valor")
 
-    if st.button("Salvar"):
+    col_salvar, col_cancelar = st.columns(2)
+
+    if col_salvar.button("Salvar ✅"):
         controller.insert_transactions_rows(transaction.dataframe)
+        st.rerun()
+    
+    if col_cancelar.button("Cancelar ❌"):
         st.rerun()
         
 
@@ -46,8 +51,13 @@ def categorie_line():
 
     categorie.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
-    if st.button("Salvar"):
+    col_salvar, col_cancelar = st.columns(2)
+
+    if col_salvar.button("Salvar ✅"):
         controller.insert_categories_rows(categorie.dataframe)
+        st.rerun()
+    
+    if col_cancelar.button("Cancelar ❌"):
         st.rerun()
 
 
@@ -58,8 +68,13 @@ def account_line():
 
     account.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
-    if st.button("Salvar"):
+    col_salvar, col_cancelar = st.columns(2)
+
+    if col_salvar.button("Salvar ✅"):
         controller.insert_accounts_rows(account.dataframe)
+        st.rerun()
+    
+    if col_cancelar.button("Cancelar ❌"):
         st.rerun()
 
 
@@ -74,6 +89,11 @@ def credit_card_line():
     credit_card.vencimento = st.number_input("Vencimento", step=0, min_value=1, max_value=31)
     credit_card.limite = st.number_input("Limite", step=10)
 
-    if st.button("Salvar"):
+    col_salvar, col_cancelar = st.columns(2)
+
+    if col_salvar.button("Salvar ✅"):
         controller.insert_credit_cards_rows(credit_card.dataframe)
+        st.rerun()
+    
+    if col_cancelar.button("Cancelar ❌"):
         st.rerun()

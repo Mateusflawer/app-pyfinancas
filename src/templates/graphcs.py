@@ -6,7 +6,7 @@ import streamlit as st
 ENTRADA = controller.ENTRADA
 DESPESA = controller.DESPESA
 
-def entries_by_categories(df):
+def entries_by_categories_dashboard(df):
     """Entradas por categorias"""
     
     with st.container(border=True):
@@ -17,7 +17,7 @@ def entries_by_categories(df):
         st.plotly_chart(fig_entradas)
 
 
-def monthly_evolution(df):
+def monthly_evolution_dashboard(df):
     """Evolução mensal"""
 
     if controller.check_empty_df(df):
@@ -79,7 +79,7 @@ def monthly_evolution(df):
         st.plotly_chart(fig)
 
 
-def expenses_by_categories(df):
+def expenses_by_categories_dashboard(df):
     """Despesas por categoria"""
 
     if controller.check_empty_df(df):

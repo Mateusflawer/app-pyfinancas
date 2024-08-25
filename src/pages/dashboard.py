@@ -1,4 +1,4 @@
-from templates import sidebar, metrics, dashboard
+from templates import sidebar, metrics, graphcs
 from utils import datetime_helpers
 from database import controller
 import streamlit as st
@@ -12,7 +12,10 @@ def main():
 
     # df = loader.example_transactions()
     controller.create_transactions_table()
-    df = controller.load_transactions_per_period(*datetime_helpers.create_period(1))
+    df = controller.load_transactions_by_year_and_selected_months(
+        st.session_state["ano_selected"],
+        st.session_state["meses_selected"]
+    )
 
     # Sem dados para gerar gráficos
     if controller.check_empty_df(df):
@@ -27,14 +30,14 @@ def main():
 
     with coluna_1:
         # Entrada por categoria
-        dashboard.entries_by_categories(df)
+        graphcs.entries_by_categories_dashboard(df)
 
         # Evolução mensal
-        dashboard.monthly_evolution(df)
+        graphcs.monthly_evolution_dashboard(df)
 
     with coluna_2:
         # Despesas por categoria
-        dashboard.expenses_by_categories(df)
+        graphcs.expenses_by_categories_dashboard(df)
 
         # Tabela de dados
         with st.container(border=True):

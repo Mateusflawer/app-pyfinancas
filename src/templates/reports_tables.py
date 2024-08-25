@@ -7,8 +7,10 @@ from templates import dialog_register, dialog_delete
 def transactions_screen():
     st.subheader("Transações")
     controller.create_transactions_table()
-    df_transactions = controller.load_transactions_per_period(*datetime_helpers.create_period(1))
-    # df_transactions["Data"] = df_transactions["Data"].apply(helpers.format_data_br)
+    df_transactions = controller.load_transactions_by_year_and_selected_months(
+        st.session_state["ano_selected"],
+        st.session_state["meses_selected"]
+    )
     st.dataframe(df_transactions, hide_index=True, use_container_width=True)
     col_registrar, col_deletar, col_editar = st.columns(3)
     
@@ -18,12 +20,11 @@ def transactions_screen():
     if col_deletar.button("❌ Deletar", key="delete_transaction"):
         dialog_delete.transaction_line()
 
-
+    
 def categories_screen():
     st.subheader("Categorias")
     controller.create_categories_table()
-    df_categories = controller.load_categories_per_period(*datetime_helpers.create_period(1))
-    # df_categories["Data"] = df_categories["Data"].apply(helpers.format_data_br)
+    df_categories = controller.load_categories()
     st.dataframe(df_categories, hide_index=True, use_container_width=True)
     col_registrar, col_deletar, col_editar = st.columns(3)
     
@@ -37,8 +38,7 @@ def categories_screen():
 def accounts_screen():
     st.subheader("Contas")
     controller.create_accounts_table()
-    df_accounts = controller.load_accounts_per_period(*datetime_helpers.create_period(1))
-    # df_accounts["Data"] = df_accounts["Data"].apply(helpers.format_data_br)
+    df_accounts = controller.load_accounts()
     st.dataframe(df_accounts, hide_index=True, use_container_width=True)
     col_registrar, col_deletar, col_editar = st.columns(3)
 
@@ -52,8 +52,7 @@ def accounts_screen():
 def credit_card_screen():
     st.subheader("Cartões de Crédito")
     controller.create_credit_cards_table()
-    df_credit_cards = controller.load_credit_cards_per_period(*datetime_helpers.create_period(1))
-    # df_credit_cards["Data"] = df_credit_cards["Data"].apply(helpers.format_data_br)
+    df_credit_cards = controller.load_credit_cards()
     st.dataframe(df_credit_cards, hide_index=True, use_container_width=True)
     col_registrar, col_deletar, col_editar = st.columns(3)
     

@@ -27,7 +27,7 @@ class Transaction:
     
     @efetivada.setter
     def efetivada(self, efetivada: bool):
-        self._efetivada = "S" if efetivada else "N"
+        self._efetivada = "Sim" if efetivada else "Nao"
 
     @property
     def dataframe(self):
