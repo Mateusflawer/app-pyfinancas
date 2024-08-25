@@ -2,14 +2,14 @@ from templates import reports_tables, sidebar
 import streamlit as st
 import locale
 
-locale.setlocale(locale.LC_ALL, "portuguese_brazil")
+locale.setlocale(locale.LC_ALL, "")
 
-TRANSACTIONS = "TRANSAÇÕES"
+TRANSACTION = "TRANSAÇÕES"
 ACCOUNT = "CONTAS"
 CATEGORIE = "CATEGORIAS"
 CREDIT_CARD = "CARTÕES DE CRÉDITO"
 
-TABS = (TRANSACTIONS, CATEGORIE, ACCOUNT, CREDIT_CARD)
+TABS = (TRANSACTION, CATEGORIE, ACCOUNT, CREDIT_CARD)
 
 def main():
 
@@ -20,7 +20,7 @@ def main():
     t_transaction, t_categorie, t_account, t_credit_card = st.tabs(TABS)
 
     with t_transaction:
-        with st.container(border=True): 
+        with st.container(border=True):
             reports_tables.transactions_screen()
 
     with t_categorie:

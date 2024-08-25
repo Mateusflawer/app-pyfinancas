@@ -1,71 +1,71 @@
 import streamlit as st
 from database import controller
-from utils import datetime_helpers
+from handlers import class_processing
+
+tipos = (controller.ENTRADA, controller.DESPESA)
 
 @st.dialog("Registrar Transação")
 def transaction_line():
     with st.container(height=400):
-        with st.spinner("Carregando dados..."):
-            df_categories = controller.load_categories_per_period(*datetime_helpers.create_period(1))
-            df_accounts = controller.load_accounts_per_period(*datetime_helpers.create_period(1))
-            df_credit_cards = controller.load_credit_cards_per_period(*datetime_helpers.create_period(1))
-
-        transaction = controller.Transaction()
+        transaction = class_processing.Transaction()
 
         transaction.descricao = st.text_area("Descrição")
 
-        credito = st.toggle("Crédito?")
-
-        if not credito:
-            transaction.tipo = st.selectbox("tipo", controller.TIPOS)
-        else:
-            transaction.tipo = controller.TIPOS[1] # Despesa
+        col_credit, col_efetivada = st.columns(2)
+        credit = col_credit.toggle("Crédito")
+        transaction.efetivada = col_efetivada.toggle("Efetivada", value=True)
         
-        if transaction.tipo == controller.TIPOS[0]: # Se entrada
-            categorias = df_categories[df_categories["tipo"]==controller.TIPOS[0]]["nome"].unique()
+        if not credit:
+            transaction.tipo = st.selectbox("Tipo", tipos)
         else:
-            categorias = df_categories[df_categories["tipo"]==controller.TIPOS[1]]["nome"].unique()
+            transaction.tipo = "Despesa"
 
-        transaction.categoria = st.selectbox("Categoria", categorias)
+        categories = controller.load_nome_categories_by_tipo(transaction.tipo)
+        transaction.categoria = st.selectbox("Categoria", categories)
     
-        if credito:
-            transaction.credit_card = st.selectbox("Cartão de crédito", df_credit_cards["nome"].unique())
+        if credit:
+            cards = controller.load_nome_credit_cards()
+            transaction.credit_card = st.selectbox("Cartão de crédito", cards)
         else:
-            transaction.conta = st.selectbox("Conta", df_accounts["nome"].unique())
+            accounts = controller.load_nome_accounts()
+            transaction.conta = st.selectbox("Conta", accounts)
 
         transaction.data = st.date_input("Data", format="DD/MM/YYYY")
         transaction.valor = st.number_input("Valor")
 
     if st.button("Salvar"):
-        # controller.insert_transactions_rows(transaction.dataframe)
+        controller.insert_transactions_rows(transaction.dataframe)
         st.rerun()
+        
 
 @st.dialog("Registrar Categoria")
 def categorie_line():
-    categorie = controller.Categorie()
+    categorie = class_processing.Categorie()
     categorie.nome = st.text_input("Nome")
     categorie.tipo = st.selectbox("Tipo", controller.TIPOS)
 
     categorie.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
     if st.button("Salvar"):
-        # controller.insert_categories_rows(categorie.dataframe)
+        controller.insert_categories_rows(categorie.dataframe)
         st.rerun()
+
 
 @st.dialog("Registrar Conta")
 def account_line():
-    account = controller.Account()
+    account = class_processing.Account()
     account.nome = st.text_input("Nome")
 
     account.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
 
     if st.button("Salvar"):
-        # controller.insert_accounts_rows(account.dataframe)
+        controller.insert_accounts_rows(account.dataframe)
         st.rerun()
+
 
 @st.dialog("Registrar Cartão")
 def credit_card_line():
-    credit_card = controller.CreditCard()
+    credit_card = class_processing.CreditCard()
     credit_card.nome = st.text_input("Nome")
 
     credit_card.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
@@ -75,5 +75,5 @@ def credit_card_line():
     credit_card.limite = st.number_input("Limite", step=10)
 
     if st.button("Salvar"):
-        # controller.insert_credit_cards_rows(credit_card.dataframe)
+        controller.insert_credit_cards_rows(credit_card.dataframe)
         st.rerun()

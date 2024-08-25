@@ -1,9 +1,10 @@
 import locale
+from database import controller
 
-locale.setlocale(locale.LC_ALL, "pt-br")
+locale.setlocale(locale.LC_ALL, "")
 
-ENTRADA = "Entrada"
-DESPESA = "Despesa"
+ENTRADA = controller.ENTRADA
+DESPESA = controller.DESPESA
 
 def dashboard_metrics(df):
     """
@@ -17,4 +18,4 @@ def dashboard_metrics(df):
     despesas = locale.currency(despesas, grouping=True)
     saldo = locale.currency(saldo, grouping=True)
 
-    return saldo, entradas, despesas
+    return entradas, despesas, saldo

@@ -3,11 +3,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 import streamlit as st
 
-ENTRADA = "Entrada"
-DESPESA = "Despesa"
-
-
-
+ENTRADA = controller.ENTRADA
+DESPESA = controller.DESPESA
 
 def entries_by_categories(df):
     """Entradas por categorias"""

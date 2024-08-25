@@ -5,18 +5,18 @@ from handlers import calculations_metrics
 
 def dashboard_metric(df):
     """Metricas"""
-    saldo, entradas, despesas = calculations_metrics.dashboard_metrics(df)
+    entradas, despesas, saldo = calculations_metrics.dashboard_metrics(df)
 
     # Metricas
-    col_saldo, col_entradas, col_despesas = st.columns(3)
-
-    with col_saldo:
-        st.metric("Saldo", saldo)
+    col_entradas, col_despesas, col_saldo = st.columns(3)
 
     with col_entradas:
         st.metric("Entradas", entradas)
 
     with col_despesas:
         st.metric("Despesas", despesas)
+        
+    with col_saldo:
+        st.metric("Saldo", saldo)
 
     style_metric_cards(background_color='auto')

@@ -13,9 +13,9 @@ def transaction_line():
     df_result = st.data_editor(df, use_container_width=True, hide_index=True)
     
     if st.button("Excluir"):
-        df_result = df_result[df_result["Excluir"]!=True]
-        df_result = df_result.drop(columns=["Excluir"])
-        # saver.local_transaction(df_result)
+        df_result = df_result[df_result["Excluir"]==True]
+        ids = df_result["id"].tolist()
+        controller.delete_rows_transactions_by_id(ids)
         st.rerun()
 
 
@@ -29,9 +29,9 @@ def categorie_line():
     df_result = st.data_editor(df, use_container_width=True, hide_index=True)
     
     if st.button("Excluir"):
-        df_result = df_result[df_result["Excluir"]!=True]
-        df_result = df_result.drop(columns=["Excluir"])
-        # saver.local_categorie(df_result)
+        df_result = df_result[df_result["Excluir"]==True]
+        ids = df_result["id"].tolist()
+        controller.delete_rows_categories_by_id(ids)
         st.rerun()
 
 
@@ -45,9 +45,9 @@ def account_line():
     df_result = st.data_editor(df, use_container_width=True, hide_index=True)
     
     if st.button("Excluir"):
-        df_result = df_result[df_result["Excluir"]!=True]
-        df_result = df_result.drop(columns=["Excluir"])
-        # saver.local_account(df_result)
+        df_result = df_result[df_result["Excluir"]==True]
+        ids = df_result["id"].tolist()
+        controller.delete_rows_accounts_by_id(ids)
         st.rerun()
 
 
@@ -61,8 +61,8 @@ def credit_card_line():
     df_result = st.data_editor(df, use_container_width=True, hide_index=True)
     
     if st.button("Excluir"):
-        df_result = df_result[df_result["Excluir"]!=True]
-        df_result = df_result.drop(columns=["Excluir"])
-        # saver.local_credit_card(df_result)
+        df_result = df_result[df_result["Excluir"]==True]
+        ids = df_result["id"].tolist()
+        controller.delete_rows_credit_cards_by_id(ids)
         st.rerun()
         

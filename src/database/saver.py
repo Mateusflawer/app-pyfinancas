@@ -14,13 +14,16 @@ def insert_rows(table: str, df: pd.DataFrame):
     # Crie um cursor para executar comandos SQL
     cursor = conn.cursor()
 
-    for _, row in df.iterrows():
+    # Obtenha os nomes das colunas do DataFrame
+    columns = ', '.join(df.columns)
+    placeholders = ', '.join(['?'] * len(df.columns))
 
-        # Adicione uma linha
-        cursor.execute(f"""
-            INSERT INTO {table} {str(tuple(row.index))} 
-            VALUES {str(tuple(row.values))}
-        """)
+    # Prepare a consulta SQL
+    sql = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
+
+    # Insira as linhas
+    for _, row in df.iterrows():
+        cursor.execute(sql, tuple(row.values))
 
     # Confirmar alterações
     conn.commit()
@@ -28,6 +31,7 @@ def insert_rows(table: str, df: pd.DataFrame):
     # Feche a conexão
     cursor.close()
     conn.close()
+
     
 
 if __name__ == "__main__":
@@ -37,4 +41,3 @@ if __name__ == "__main__":
     }
     df = pd.DataFrame(dados)
     insert_rows("accounts", df)
-    

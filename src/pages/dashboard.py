@@ -1,16 +1,17 @@
-from templates import sidebar, dashboard
+from templates import sidebar, metrics, dashboard
 from utils import datetime_helpers
 from database import controller
 import streamlit as st
 import locale
 
-locale.setlocale(locale.LC_ALL, "portuguese_brazil")
+locale.setlocale(locale.LC_ALL, "")
 
 def main():
     # Menu de navegação
     sidebar.menu()
 
     # df = loader.example_transactions()
+    controller.create_transactions_table()
     df = controller.load_transactions_per_period(*datetime_helpers.create_period(1))
 
     # Sem dados para gerar gráficos
@@ -19,7 +20,7 @@ def main():
         st.stop()
 
     # Mostrando gráficos e metricas
-    dashboard.metrics(df)
+    metrics.dashboard_metric(df)
 
     # Graficos categoria
     coluna_1, coluna_2 = st.columns(2)
@@ -36,7 +37,8 @@ def main():
         dashboard.expenses_by_categories(df)
 
         # Tabela de dados
-        st.dataframe()
+        with st.container(border=True):
+            st.dataframe()
 
 if __name__ == "__main__":
     # Configurações da página
