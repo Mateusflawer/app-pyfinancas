@@ -1,5 +1,5 @@
-from datetime import datetime, timedelta
 from pathlib import Path
+import streamlit as st
 import pandas as pd
 import sqlite3
 
@@ -12,10 +12,12 @@ def load_data(table: str):
     conn = sqlite3.connect(DATABASE)
     
     query = f"""
-        SELECT * FROM {table}
+        SELECT * FROM {table} WHERE user_id = ?
     """
     
-    df = pd.read_sql_query(query, conn)
+    params = (st.session_state["user_id"],)
+    
+    df = pd.read_sql_query(query, conn, params=params)
     conn.close()
     return df
 
@@ -26,10 +28,11 @@ def load_nome_by_tipo(table:str, tipo: str) -> pd.DataFrame:
 
     query = f"""
         SELECT nome FROM {table}
-        WHERE tipo = ? GROUP BY nome
+        WHERE tipo = ? AND user_id = ?  
+        GROUP BY nome
     """
     
-    params = (tipo,)
+    params = (tipo, st.session_state["user_id"])
     df = pd.read_sql_query(query, conn, params=params)
     
     conn.close()  # Fechar a conexão após a execução da consulta
@@ -41,14 +44,15 @@ def load_nome(table: str):
     conn = sqlite3.connect(DATABASE)
 
     query = f"""
-        SELECT nome FROM {table} GROUP BY nome
+        SELECT nome FROM {table} 
+        WHERE user_id = ? 
+        GROUP BY nome
     """
-    
-    df = pd.read_sql_query(query, conn)
+    params = (st.session_state["user_id"],)
+    df = pd.read_sql_query(query, conn, params=params)
 
     conn.close()  # Fechar a conexão após a execução da consulta
     return df
-
 
 
 def load_years(table: str):
@@ -58,10 +62,11 @@ def load_years(table: str):
         SELECT DISTINCT 
             strftime('%Y', data) AS ano 
         FROM {table} 
+        WHERE user_id = ? 
         ORDER BY ano DESC
     """
-    
-    df = pd.read_sql_query(query, conn)
+    params = (st.session_state["user_id"],)
+    df = pd.read_sql_query(query, conn, params=params)
     
     conn.close()  # Fechar a conexão após a execução da consulta
     return df
@@ -74,10 +79,10 @@ def load_months_by_year(table: str, year: str):
         SELECT DISTINCT 
             strftime('%m', data) AS mes 
         FROM {table} 
-        WHERE strftime('%Y', data) = ?
+        WHERE strftime('%Y', data) = ? AND user_id = ? 
         ORDER BY mes DESC
     """
-    params = (year,)
+    params = (year, st.session_state["user_id"])
     
     df = pd.read_sql_query(query, conn, params=params)
     
@@ -87,28 +92,54 @@ def load_months_by_year(table: str, year: str):
 
 def load_data_by_year_and_selected_months(table: str, selected_year: str, months: list):
     conn = sqlite3.connect(DATABASE)
-
-    # Converter a lista de meses em uma string formatada para a cláusula IN
-    meses_str = ', '.join([f"'{mes}'" for mes in months])
-
+    
+    # Construa a cláusula IN para os meses
+    placeholders = ', '.join('?' for _ in months)
+    
     query = f"""
         SELECT * 
         FROM {table}
-        WHERE strftime('%Y', data) = '{selected_year}'
-        AND strftime('%m', data) IN ({meses_str})
+        WHERE strftime('%Y', data) = ? 
+        AND strftime('%m', data) IN ({placeholders}) 
+        AND user_id = ? 
         ORDER BY strftime('%Y', data), strftime('%m', data) DESC
     """
     
-    df = pd.read_sql_query(query, conn)
+    # Parâmetros combinados (ano, meses e user_id)
+    params = (selected_year, *months, st.session_state["user_id"])
+    
+    # Execute a consulta SQL
+    df = pd.read_sql_query(query, conn, params=params)
+    
+    conn.close()
+    return df
+
+
+def load_credentials(table: str, username: str, password: str) -> pd.DataFrame:
+    conn = sqlite3.connect(DATABASE)
+
+    query = f"""
+        SELECT 
+            * 
+        FROM {table} 
+        WHERE ? = username AND ? = password 
+    """
+
+    params = (username, password)
+
+    df = pd.read_sql_query(query, conn, params=params)
     
     conn.close()
     return df
 
 
 if __name__ == "__main__":
-    df_years = load_years("transactions")
-    df_months = load_months_by_year("transactions", '2024')
-    df = load_data_by_year_and_selected_months('transactions', '2024', ['06', '07', '08'])
-    print(df_years)
-    print(df_months)
+    # df_years = load_years("transactions")
+    # df_months = load_months_by_year("transactions", '2024')
+    # df = load_data_by_year_and_selected_months('transactions', '2024', ['06', '07', '08'])
+    # print(df_years)
+    # print(df_months)
+    # print(df)
+    
+    df = load_credentials("users", "mateus", "123")
     print(df)

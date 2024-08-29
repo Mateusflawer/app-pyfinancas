@@ -1,5 +1,6 @@
 import datetime
 import pandas as pd
+import streamlit as st
 
 class Transaction:
     def __init__(self):
@@ -40,6 +41,7 @@ class Transaction:
             "cartao": self.cartao,
             "valor": self.valor,
             "efetivada": self.efetivada,
+            "user_id": st.session_state["user_id"]
         }]
         return pd.DataFrame(data)
 
@@ -65,6 +67,7 @@ class Categorie:
             "data": self._data,
             "nome": self.nome,
             "tipo": self.tipo,
+            "user_id": st.session_state["user_id"]
         }]
         return pd.DataFrame(data)
     
@@ -88,6 +91,7 @@ class Account:
         data = [{
             "data": self._data,
             "nome": self.nome,
+            "user_id": st.session_state["user_id"]
         }]
         return pd.DataFrame(data)
     
@@ -117,5 +121,7 @@ class CreditCard:
             "fechamento": self.fechamento,
             "vencimento": self.vencimento,
             "limite": self.limite,
+            "user_id": st.session_state["user_id"]
         }]
         return pd.DataFrame(data)
+    

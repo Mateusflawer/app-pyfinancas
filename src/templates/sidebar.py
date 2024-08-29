@@ -1,17 +1,11 @@
 import streamlit as st
-from datetime import datetime
 from database import controller
 import calendar
 
-def menu():
+def period():
     with st.sidebar:
-        st.header("Py Finanças", divider=True)
-        st.page_link("pages/dashboard.py", label="Gráficos", icon="📊")
-        st.page_link("pages/reports.py", label="Relatórios", icon="📄")
-        st.page_link("pages/settings.py", label="Configurações", icon="⚙️")
-        st.divider()
-        
         # Supondo que controller já tenha as funções definidas
+        controller.create_transactions_table()
         df_anos = controller.load_years_transactions()
         lista_de_anos = df_anos["ano"].tolist()
         ano_selected = st.selectbox("Ano", lista_de_anos)
@@ -30,4 +24,20 @@ def menu():
 
         st.session_state["ano_selected"] = ano_selected
         st.session_state["meses_selected"] = meses_selected
+
+
+def menu():
+    with st.sidebar:
+        # Nomes
+        st.header("Py Finanças", divider=True)
+        st.subheader(f"Olá, {st.session_state["username"]}!", divider=True)
+        
+        # Links
+        st.page_link("pages/dashboard.py", label="Gráficos", icon="📊")
+        st.page_link("pages/reports.py", label="Relatórios", icon="📄")
+        st.page_link("pages/settings.py", label="Configurações", icon="⚙️")
+        st.divider()
+        
+        # Input período
+        period()
         

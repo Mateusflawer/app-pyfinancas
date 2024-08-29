@@ -1,4 +1,5 @@
 from templates import reports_tables, sidebar
+from utils import autenticated_helpers
 import streamlit as st
 import locale
 
@@ -36,6 +37,9 @@ def main():
             reports_tables.credit_card_screen()
 
 if __name__ == "__main__":
-    # Configurações da página
-    st.set_page_config("Relatórios", "📄", "wide")
-    main()
+    if autenticated_helpers.autenticated():
+        # Configurações da página
+        st.set_page_config("Relatórios", "📄", "wide")
+        main()
+    else:
+        st.switch_page("pages/login.py")

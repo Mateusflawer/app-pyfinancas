@@ -1,8 +1,9 @@
 from templates import sidebar, metrics, graphcs
-from utils import datetime_helpers
 from database import controller
+from utils import autenticated_helpers
 import streamlit as st
 import locale
+
 
 locale.setlocale(locale.LC_ALL, "")
 
@@ -10,8 +11,6 @@ def main():
     # Menu de navegação
     sidebar.menu()
 
-    # df = loader.example_transactions()
-    controller.create_transactions_table()
     df = controller.load_transactions_by_year_and_selected_months(
         st.session_state["ano_selected"],
         st.session_state["meses_selected"]
@@ -44,6 +43,9 @@ def main():
             st.dataframe()
 
 if __name__ == "__main__":
-    # Configurações da página
-    st.set_page_config("Gráficos", "📊", "wide")
-    main()
+    if autenticated_helpers.autenticated():
+        # Configurações da página
+        st.set_page_config("Gráficos", "📊", "wide")
+        main()
+    else:
+        st.switch_page("pages/login.py")
