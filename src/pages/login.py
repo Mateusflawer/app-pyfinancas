@@ -34,7 +34,7 @@ def main():
             else:
                 st.toast("Preencha os campos", icon="⚠️")
         
-        if col_cadastrar.form_submit_button("Cadastrar"):
+        if col_cadastrar.form_submit_button("Cadastro"):
             st.switch_page("pages/register_login.py")
         
         st.divider()
