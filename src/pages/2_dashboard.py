@@ -15,7 +15,7 @@ def main():
 
     # Sem dados para gerar gráficos
     if dataframe_helpers.check_empty_df(df):
-        st.toast("Sem dados para gerar gráficos", icon="🚨")
+        st.toast("Sem dados para gerar os gráficos", icon="🚨")
         st.stop()
 
     # Mostrando gráficos e metricas

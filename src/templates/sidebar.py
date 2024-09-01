@@ -28,6 +28,8 @@ def input_period():
 
 def button_sair():
     if st.button("SAIR", type='primary', use_container_width=True):
+        st.cache_data.clear()
+        st.cache_resource.clear()
         st.session_state.clear()
         st.rerun()
 
