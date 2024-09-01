@@ -5,7 +5,7 @@ import streamlit as st
 from utils import dataframe_helpers
 
 ENTRADA = controller.ENTRADA
-DESPESA = controller.DESPESA
+SAIDA = controller.SAIDA
 
 def entries_by_categories_dashboard(df):
     """Entradas por categorias"""
@@ -28,8 +28,8 @@ def monthly_evolution_dashboard(df):
     with st.container(border=True):
         # Agrupando os dados para o gráfico de evolução mensal
         df_entradas = df[df['tipo'] == ENTRADA].groupby('data').sum().reset_index()
-        df_despesas = df[df['tipo'] == DESPESA].groupby('data').sum().reset_index()
-        df_entradas['Saldo Acumulado'] = df_entradas['valor'].cumsum() - df_despesas['valor'].cumsum()
+        df_saidas = df[df['tipo'] == SAIDA].groupby('data').sum().reset_index()
+        df_entradas['Saldo Acumulado'] = df_entradas['valor'].cumsum() - df_saidas['valor'].cumsum()
         fig = go.Figure()
 
         # Adicionando barras para Entradas
@@ -40,11 +40,11 @@ def monthly_evolution_dashboard(df):
             marker_color='rgb(55, 83, 109)'
         ))
 
-        # Adicionando barras para Despesas
+        # Adicionando barras para saidas
         fig.add_trace(go.Bar(
-            x=df_despesas['data'],
-            y=df_despesas['valor'],
-            name=DESPESA,
+            x=df_saidas['data'],
+            y=df_saidas['valor'],
+            name=SAIDA,
             marker_color='rgb(26, 118, 255)'
         ))
 
@@ -59,7 +59,7 @@ def monthly_evolution_dashboard(df):
 
         # Atualizando layout do gráfico
         fig.update_layout(
-            title='Evolução Mensal de Entradas vs Despesas',
+            title='Evolução Mensal de Entradas vs saidas',
             xaxis_tickfont_size=14,
             yaxis=dict(
                 title='valor (R$)',
@@ -81,18 +81,18 @@ def monthly_evolution_dashboard(df):
 
 
 def expenses_by_categories_dashboard(df):
-    """Despesas por categoria"""
+    """saidas por categoria"""
 
     if dataframe_helpers.check_empty_df(df):
         st.toast("Sem metrica para analisar", icon="📓")
         return
     
     with st.container(border=True):
-        # Gráfico de despesas por categoria
-        fig_despesas = px.pie(df[df['tipo'] == DESPESA], names='categoria', values='valor', title='Despesas por categoria',
+        # Gráfico de saidas por categoria
+        fig_saidas = px.pie(df[df['tipo'] == SAIDA], names='categoria', values='valor', title='saidas por categoria',
                         color_discrete_sequence=px.colors.qualitative.Pastel)
-        fig_despesas.update_traces(textinfo='percent+label')
-        st.plotly_chart(fig_despesas)
+        fig_saidas.update_traces(textinfo='percent+label')
+        st.plotly_chart(fig_saidas)
 
 
 def indicador():

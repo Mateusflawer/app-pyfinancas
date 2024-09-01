@@ -1,6 +1,6 @@
 from templates import sidebar, metrics, graphcs
 from database import controller
-from utils import autenticated_helpers, dataframe_helpers
+from utils import dataframe_helpers
 import streamlit as st
 import locale
 
@@ -8,9 +8,6 @@ import locale
 locale.setlocale(locale.LC_ALL, "")
 
 def main():
-    # Menu de navegação
-    sidebar.menu()
-
     df = controller.load_transactions_by_year_and_selected_months(
         st.session_state["ano_selected"],
         st.session_state["meses_selected"]
@@ -43,9 +40,7 @@ def main():
             st.dataframe()
 
 if __name__ == "__main__":
-    if autenticated_helpers.autenticated():
-        # Configurações da página
-        st.set_page_config("Gráficos", "📊", "wide")
-        main()
-    else:
-        st.switch_page("pages/login.py")
+    # Configurações da página
+    st.set_page_config("Gráficos", "📊", "wide")
+    sidebar.menu()
+    main()

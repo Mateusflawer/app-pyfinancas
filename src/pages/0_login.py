@@ -23,7 +23,7 @@ def main():
                     st.session_state['username'] = username
                     st.session_state['password'] = password
                     st.session_state['user_id'] = str(df_user['id'].values[0])
-                    st.switch_page("pages/dashboard.py")
+                    st.switch_page("pages\\2_dashboard.py")
                 else:
                     st.toast("Credênciais inválidas", icon='❌')
             
@@ -37,7 +37,7 @@ def main():
                 st.toast("Preencha os campos", icon="⚠️")
         
         if col_cadastrar.form_submit_button("Cadastro"):
-            st.switch_page("pages/register_login.py")
+            st.switch_page("pages\\1_register_login.py")
         
         st.divider()
         st.write("Copyright © 2024 Mateus Alves")

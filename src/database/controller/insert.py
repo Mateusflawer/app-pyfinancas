@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 from .config import (
-    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, CREDIT_CARDS, USERS
+    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, USERS
 )
 
 def insert_rows(table: str, df: pd.DataFrame):
@@ -43,11 +43,6 @@ def insert_categories_rows(df: pd.DataFrame):
     
 def insert_accounts_rows(df: pd.DataFrame):
     insert_rows(ACCOUNTS, df)
-    st.cache_resource.clear()
-    
-    
-def insert_credit_cards_rows(df: pd.DataFrame):
-    insert_rows(CREDIT_CARDS, df)
     st.cache_resource.clear()
 
 

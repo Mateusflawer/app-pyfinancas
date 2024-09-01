@@ -1,7 +1,7 @@
 import streamlit as st
 import sqlite3
 from .config import (
-    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, CREDIT_CARDS
+    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS,
 )
 
 def delete_rows_by_id(table: str, ids: list):
@@ -47,7 +47,3 @@ def delete_rows_accounts_by_id(ids: list):
     delete_rows_by_id(ACCOUNTS, ids)
     st.cache_resource.clear()
     
-    
-def delete_rows_credit_cards_by_id(ids: list):
-    delete_rows_by_id(CREDIT_CARDS, ids)
-    st.cache_resource.clear()

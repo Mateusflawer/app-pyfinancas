@@ -1,6 +1,7 @@
 import streamlit as st
 from database import controller
 import calendar
+from utils import autenticated_helpers
 
 def input_period():
     # Supondo que controller já tenha as funções definidas
@@ -32,21 +33,22 @@ def button_sair():
 
 
 def menu():
-    with st.sidebar:
-        # Usuário
-        st.header(f"{str(st.session_state["username"]).upper()}", divider=True)
-        
-        # Links
-        st.subheader("Menu", divider=True)
-        st.page_link("pages/dashboard.py", label="Gráficos", icon="📊")
-        st.page_link("pages/reports.py", label="Relatórios", icon="📄")
-        st.page_link("pages/settings.py", label="Configurações", icon="⚙️")
-        # Input periodo
-        st.subheader("Período", divider=True)
-        input_period()
+    if not autenticated_helpers.autenticated():
+        st.switch_page("pages\\0_login.py")
+    else:
+        with st.sidebar:
+            # Usuário
+            st.header(f"{str(st.session_state["username"]).upper()}", divider=True)
+            
+            # Links
+            st.subheader("Menu", divider=True)
+            st.page_link("pages/2_dashboard.py", label="Gráficos", icon="📊")
+            st.page_link("pages/3_reports.py", label="Relatórios", icon="📄")
+            st.page_link("pages/4_settings.py", label="Configurações", icon="⚙️")
+            # Input periodo
+            st.subheader("Período", divider=True)
+            input_period()
 
-        # Sair
-        st.divider()
-        button_sair()
-        
-        
+            # Sair
+            st.divider()
+            button_sair()

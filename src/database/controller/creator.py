@@ -1,6 +1,6 @@
 import sqlite3
 from .config import (
-    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, CREDIT_CARDS, USERS
+    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, USERS
 )
 
 def create_table(query: str):
@@ -30,7 +30,6 @@ def create_transactions_table():
         categoria TEXT, 
         tipo TEXT, 
         conta TEXT, 
-        cartao TEXT, 
         valor FLOAT, 
         descricao TEXT, 
         efetivada TEXT 
@@ -59,21 +58,6 @@ def create_accounts_table():
         user_id INT, 
         data DATETIME, 
         nome TEXT
-    )
-    """
-    create_table(query)
-    
-    
-def create_credit_cards_table():
-    query = f"""
-    CREATE TABLE IF NOT EXISTS {CREDIT_CARDS} (
-        id INTEGER PRIMARY KEY, 
-        user_id INT, 
-        data DATETIME, 
-        nome TEXT, 
-        fechamento DATETIME, 
-        vencimento DATETIME, 
-        limite FLOAT
     )
     """
     create_table(query)

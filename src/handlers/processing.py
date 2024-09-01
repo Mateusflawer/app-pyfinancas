@@ -9,7 +9,6 @@ class Transaction:
         self.categoria = None
         self.tipo = None
         self.conta = None
-        self.cartao = None
         self.valor = None
         self._efetivada = None
 
@@ -38,7 +37,6 @@ class Transaction:
             "categoria": self.categoria,
             "tipo": self.tipo,
             "conta": self.conta,
-            "cartao": self.cartao,
             "valor": self.valor,
             "efetivada": self.efetivada,
             "user_id": st.session_state["user_id"]

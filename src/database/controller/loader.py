@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 from .config import (
-    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, CREDIT_CARDS, USERS
+    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, USERS
 )
 
 
@@ -146,13 +146,6 @@ def load_nome_accounts():
 
 
 @st.cache_resource
-def load_nome_credit_cards():
-    """Carrega o nomes dos cartões"""
-    df = load_nome(CREDIT_CARDS)
-    return df
-
-
-@st.cache_resource
 def load_years_transactions():
     """Carrega os anos das transações cadastradas"""
     df = load_years(TRANSACTIONS)
@@ -184,13 +177,6 @@ def load_categories():
 def load_accounts():
     """Carrega todas as contas cadastradas"""
     df = load_data(ACCOUNTS)
-    return df
-
-
-@st.cache_resource
-def load_credit_cards():
-    """Carrega todos os cartões cadastrados"""
-    df = load_data(CREDIT_CARDS)
     return df
 
 

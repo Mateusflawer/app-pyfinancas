@@ -48,17 +48,4 @@ def accounts_screen():
     if col_deletar.button("❌ Deletar", key="delete_account"):
         dialog_delete.account_line()
 
-
-def credit_card_screen():
-    st.subheader("Cartões de Crédito")
-    controller.create_credit_cards_table()
-    df_credit_cards = controller.load_credit_cards()
-    st.dataframe(df_credit_cards, hide_index=True, use_container_width=True)
-    col_registrar, col_deletar, col_editar = st.columns(3)
-    
-    if col_registrar.button("➕ Registrar", key="register_credit_card"):
-        dialog_register.credit_card_line()
-
-    if col_deletar.button("❌ Deletar", key="delete_credit_card"):
-        dialog_delete.credit_card_line()
         
