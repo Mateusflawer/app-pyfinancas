@@ -1,11 +1,9 @@
-from pathlib import Path
+import streamlit as st
 import pandas as pd
 import sqlite3
-
-
-ROOT_DIR = Path(__file__).parent.parent
-DATABASE = ROOT_DIR / "database" / "database.db"
-
+from .config import (
+    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, CREDIT_CARDS, USERS
+)
 
 def insert_rows(table: str, df: pd.DataFrame):
     # Conecte-se ao banco de dados (ou crie um novo se não existir)
@@ -32,12 +30,28 @@ def insert_rows(table: str, df: pd.DataFrame):
     cursor.close()
     conn.close()
 
-    
 
-if __name__ == "__main__":
-    dados = {
-        "data": ["2024-08-20"],
-        "nome": ["teste"]
-    }
-    df = pd.DataFrame(dados)
-    insert_rows("accounts", df)
+def insert_transactions_rows(df: pd.DataFrame):
+    insert_rows(TRANSACTIONS, df)
+    st.cache_resource.clear()
+    
+    
+def insert_categories_rows(df: pd.DataFrame):
+    insert_rows(CATEGORIES, df)
+    st.cache_resource.clear()
+    
+    
+def insert_accounts_rows(df: pd.DataFrame):
+    insert_rows(ACCOUNTS, df)
+    st.cache_resource.clear()
+    
+    
+def insert_credit_cards_rows(df: pd.DataFrame):
+    insert_rows(CREDIT_CARDS, df)
+    st.cache_resource.clear()
+
+
+def insert_user_registration(df: pd.DataFrame):
+    insert_rows(USERS, df)
+    st.cache_resource.clear()
+    

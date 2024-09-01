@@ -24,6 +24,7 @@ def transaction_line():
         st.rerun()
 
     if col_cancelar.button("Cancelar ❌"):
+        st.cache_resource.clear()
         st.rerun()
 
 
@@ -45,6 +46,7 @@ def categorie_line():
         st.rerun()
 
     if col_cancelar.button("Cancelar ❌"):
+        st.cache_resource.clear()
         st.rerun()
 
 
@@ -66,6 +68,7 @@ def account_line():
         st.rerun()
 
     if col_cancelar.button("Cancelar ❌"):
+        st.cache_resource.clear()
         st.rerun()
 
 
@@ -87,5 +90,6 @@ def credit_card_line():
         st.rerun()
 
     if col_cancelar.button("Cancelar ❌"):
+        st.cache_resource.clear()
         st.rerun()
         

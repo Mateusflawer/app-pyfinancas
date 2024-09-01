@@ -1,11 +1,9 @@
-from pathlib import Path
 import streamlit as st
 import pandas as pd
 import sqlite3
-
-ROOT_DIR = Path(__file__).parent.parent
-
-DATABASE = ROOT_DIR / "database" / "database.db"
+from .config import (
+    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, CREDIT_CARDS, USERS
+)
 
 
 def load_data(table: str):
@@ -133,13 +131,71 @@ def load_credentials(table: str, username: str, password: str) -> pd.DataFrame:
     return df
 
 
-if __name__ == "__main__":
-    # df_years = load_years("transactions")
-    # df_months = load_months_by_year("transactions", '2024')
-    # df = load_data_by_year_and_selected_months('transactions', '2024', ['06', '07', '08'])
-    # print(df_years)
-    # print(df_months)
-    # print(df)
+@st.cache_resource
+def load_nome_categories_by_tipo(tipo: str) -> pd.DataFrame:
+    """Carrega as categorias por tipo"""
+    df = load_nome_by_tipo(CATEGORIES, tipo)
+    return df
+
+
+@st.cache_resource
+def load_nome_accounts():
+    """Carrega os nomes das contas"""
+    df = load_nome(ACCOUNTS)
+    return df
+
+
+@st.cache_resource
+def load_nome_credit_cards():
+    """Carrega o nomes dos cartões"""
+    df = load_nome(CREDIT_CARDS)
+    return df
+
+
+@st.cache_resource
+def load_years_transactions():
+    """Carrega os anos das transações cadastradas"""
+    df = load_years(TRANSACTIONS)
+    return df
+
+
+@st.cache_resource
+def load_months_transactions_by_year(year: str):
+    """Carrega os meses das transações cadastradas por ano"""
+    df = load_months_by_year(TRANSACTIONS, year)
+    return df
+
+
+@st.cache_resource
+def load_transactions_by_year_and_selected_months(year: str, months: list):
+    """Carrega as transações por ano e meses selecionados"""
+    df = load_data_by_year_and_selected_months(TRANSACTIONS, year, months)
+    return df
     
-    df = load_credentials("users", "mateus", "123")
-    print(df)
+
+@st.cache_resource
+def load_categories():
+    """Carrega todas as categorias cadastradas"""
+    df = load_data(CATEGORIES)
+    return df
+
+
+@st.cache_resource
+def load_accounts():
+    """Carrega todas as contas cadastradas"""
+    df = load_data(ACCOUNTS)
+    return df
+
+
+@st.cache_resource
+def load_credit_cards():
+    """Carrega todos os cartões cadastrados"""
+    df = load_data(CREDIT_CARDS)
+    return df
+
+
+def load_users_credentials(username: str, password: str) -> pd.DataFrame:
+    """Carrega as credenciais no banco de dados"""
+    df = load_credentials(USERS, username, password)
+    return df
+

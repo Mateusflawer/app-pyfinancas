@@ -2,6 +2,7 @@ from database import controller
 import plotly.graph_objects as go
 import plotly.express as px
 import streamlit as st
+from utils import dataframe_helpers
 
 ENTRADA = controller.ENTRADA
 DESPESA = controller.DESPESA
@@ -20,7 +21,7 @@ def entries_by_categories_dashboard(df):
 def monthly_evolution_dashboard(df):
     """Evolução mensal"""
 
-    if controller.check_empty_df(df):
+    if dataframe_helpers.check_empty_df(df):
         st.toast("Sem metrica para analisar", icon="📓")
         return
 
@@ -82,7 +83,7 @@ def monthly_evolution_dashboard(df):
 def expenses_by_categories_dashboard(df):
     """Despesas por categoria"""
 
-    if controller.check_empty_df(df):
+    if dataframe_helpers.check_empty_df(df):
         st.toast("Sem metrica para analisar", icon="📓")
         return
     

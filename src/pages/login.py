@@ -16,8 +16,10 @@ def main():
         if col_entrar.form_submit_button('Entrar', type="primary"):
 
             if username and password:
-                df_user = controller.check_credentials(username, password)
+                df_user = controller.load_users_credentials(username, password)
                 if not df_user.empty:
+                    st.cache_data.clear()
+                    st.cache_resource.clear()
                     st.session_state['username'] = username
                     st.session_state['password'] = password
                     st.session_state['user_id'] = str(df_user['id'].values[0])

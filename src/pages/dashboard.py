@@ -1,6 +1,6 @@
 from templates import sidebar, metrics, graphcs
 from database import controller
-from utils import autenticated_helpers
+from utils import autenticated_helpers, dataframe_helpers
 import streamlit as st
 import locale
 
@@ -17,7 +17,7 @@ def main():
     )
 
     # Sem dados para gerar gráficos
-    if controller.check_empty_df(df):
+    if dataframe_helpers.check_empty_df(df):
         st.toast("Sem dados para gerar gráficos", icon="🚨")
         st.stop()
 

@@ -1,13 +1,13 @@
 import streamlit as st
 from database import controller
-from handlers import class_processing
+from handlers import processing
 
 tipos = (controller.ENTRADA, controller.DESPESA)
 
 @st.dialog("Registrar Transação")
 def transaction_line():
     with st.container(height=400):
-        transaction = class_processing.Transaction()
+        transaction = processing.Transaction()
 
         transaction.descricao = st.text_area("Descrição")
 
@@ -45,7 +45,7 @@ def transaction_line():
 
 @st.dialog("Registrar Categoria")
 def categorie_line():
-    categorie = class_processing.Categorie()
+    categorie = processing.Categorie()
     categorie.nome = st.text_input("Nome")
     categorie.tipo = st.selectbox("Tipo", controller.TIPOS)
 
@@ -63,7 +63,7 @@ def categorie_line():
 
 @st.dialog("Registrar Conta")
 def account_line():
-    account = class_processing.Account()
+    account = processing.Account()
     account.nome = st.text_input("Nome")
 
     account.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)
@@ -80,7 +80,7 @@ def account_line():
 
 @st.dialog("Registrar Cartão")
 def credit_card_line():
-    credit_card = class_processing.CreditCard()
+    credit_card = processing.CreditCard()
     credit_card.nome = st.text_input("Nome")
 
     credit_card.data = st.date_input("Data", format="DD/MM/YYYY", disabled=True)

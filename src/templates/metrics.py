@@ -1,11 +1,11 @@
 import streamlit as st
 from streamlit_extras.metric_cards import style_metric_cards
-from handlers import calculations_metrics
+from handlers import calculations
 
 
 def dashboard_metric(df):
     """Metricas"""
-    entradas, despesas, saldo = calculations_metrics.dashboard_metrics(df)
+    entradas, despesas, saldo = calculations.dashboard_metrics(df)
 
     # Metricas
     col_entradas, col_despesas, col_saldo = st.columns(3)

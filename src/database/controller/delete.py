@@ -1,11 +1,8 @@
-from pathlib import Path
-import pandas as pd
+import streamlit as st
 import sqlite3
-
-
-ROOT_DIR = Path(__file__).parent.parent
-DATABASE = ROOT_DIR / "database" / "database.db"
-
+from .config import (
+    DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS, CREDIT_CARDS
+)
 
 def delete_rows_by_id(table: str, ids: list):
     """
@@ -34,8 +31,23 @@ def delete_rows_by_id(table: str, ids: list):
     # Feche a conexão
     cursor.close()
     conn.close()
-    
 
-if __name__ == "__main__":
-    delete_rows_by_id("transactions", [11, 12])
+
+def delete_rows_transactions_by_id(ids: list):
+    delete_rows_by_id(TRANSACTIONS, ids)
+    st.cache_resource.clear()
     
+    
+def delete_rows_categories_by_id(ids: list):
+    delete_rows_by_id(CATEGORIES, ids)
+    st.cache_resource.clear()
+    
+    
+def delete_rows_accounts_by_id(ids: list):
+    delete_rows_by_id(ACCOUNTS, ids)
+    st.cache_resource.clear()
+    
+    
+def delete_rows_credit_cards_by_id(ids: list):
+    delete_rows_by_id(CREDIT_CARDS, ids)
+    st.cache_resource.clear()
