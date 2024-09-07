@@ -37,7 +37,7 @@ def main():
                 st.toast("Preencha os campos", icon="⚠️")
         
         if col_cadastrar.form_submit_button("Cadastro"):
-            st.switch_page("pages\\1_register_login.py")
+            st.switch_page("pages\\1_register.py")
         
         st.divider()
         st.write("Copyright © 2024 Mateus Alves")

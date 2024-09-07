@@ -1,7 +1,8 @@
 import streamlit as st
 from database import controller
+from templates import dialogs
 from utils import datetime_helpers
-from templates import dialog_register, dialog_delete
+from templates import dialogs
 
 
 def transactions_screen():
@@ -15,10 +16,10 @@ def transactions_screen():
     col_registrar, col_deletar, col_editar = st.columns(3)
     
     if col_registrar.button("➕ Registrar", key="register_transaction"):
-        dialog_register.transaction_line()
+        dialogs.transaction_line()
 
     if col_deletar.button("❌ Deletar", key="delete_transaction"):
-        dialog_delete.transaction_line()
+        dialogs.transaction_line()
 
     
 def categories_screen():
@@ -29,10 +30,10 @@ def categories_screen():
     col_registrar, col_deletar, col_editar = st.columns(3)
     
     if col_registrar.button("➕ Registrar", key="register_categorie"):
-        dialog_register.categorie_line()
+        dialogs.categorie_line()
 
     if col_deletar.button("❌ Deletar", key="delete_categorie"):
-        dialog_delete.categorie_line()
+        dialogs.categorie_line()
 
 
 def accounts_screen():
@@ -43,9 +44,9 @@ def accounts_screen():
     col_registrar, col_deletar, col_editar = st.columns(3)
 
     if col_registrar.button("➕ Registrar", key="register_account"):
-        dialog_register.account_line()
+        dialogs.account_line()
 
     if col_deletar.button("❌ Deletar", key="delete_account"):
-        dialog_delete.account_line()
+        dialogs.account_line()
 
         

@@ -26,13 +26,15 @@ def create_transactions_table():
     CREATE TABLE IF NOT EXISTS {TRANSACTIONS} (
         id INTEGER PRIMARY KEY, 
         user_id INT, 
-        data DATETIME, 
-        categoria TEXT, 
-        tipo TEXT, 
-        conta TEXT, 
-        valor FLOAT, 
         descricao TEXT, 
-        efetivada TEXT 
+        valor FLOAT, 
+        lancamento DATETIME,
+        vencimento DATETIME,
+        efetivacao DATETIME, 
+        categoria TEXT, 
+        subcategoria TEXT, 
+        cartao TEXT, 
+        conta TEXT 
     )
     """
     create_table(query)
@@ -43,7 +45,7 @@ def create_categories_table():
     CREATE TABLE IF NOT EXISTS {CATEGORIES} (
         id INTEGER PRIMARY KEY, 
         user_id INT, 
-        data DATETIME, 
+        lancamento DATETIME, 
         nome TEXT, 
         tipo TEXT
     )
@@ -56,7 +58,7 @@ def create_accounts_table():
     CREATE TABLE IF NOT EXISTS {ACCOUNTS} (
         id INTEGER PRIMARY KEY, 
         user_id INT, 
-        data DATETIME, 
+        lancamento DATETIME, 
         nome TEXT
     )
     """
@@ -70,7 +72,7 @@ def create_users_table():
         username TEXT, 
         password TEXT, 
         email TEXT, 
-        data DATETIME 
+        lancamento DATETIME 
     )
     """
     create_table(query)
