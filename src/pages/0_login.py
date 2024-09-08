@@ -8,8 +8,12 @@ def main():
 
     with cols[1].form('form-login-travelmetry', border=True):
         st.header('🔐 Login', anchor=False)
-        username = st.text_input('Nome de usuário', placeholder="Nome de usuário", max_chars=30)
-        password = st.text_input('Senha', type='password', placeholder="Senha", max_chars=30)
+        username = st.text_input(
+            'Nome de usuário', placeholder="Nome de Usuário", max_chars=30
+        )
+        password = st.text_input(
+            'Senha', type='password', placeholder="Senha", max_chars=30
+        )
 
         col_entrar, col_cadastrar = st.columns(2)
 

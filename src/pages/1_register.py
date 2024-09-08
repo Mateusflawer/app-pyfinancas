@@ -13,10 +13,18 @@ def show_registration_form():
     # Formulário de cadastro
     with cols[1].form("registration_form"):
         st.header("🔐 Cadastro")
-        username = st.text_input("Nome de usuário", placeholder="Nome de Usuário", max_chars=30)
-        email = st.text_input("Email", placeholder="Ex.: exemple@exemple.com", max_chars=30)
-        password = st.text_input("Senha", type="password", placeholder="Senha", max_chars=30)
-        confirm_password = st.text_input("Confirme sua senha", type="password", placeholder="Confirmação de senha", max_chars=30)
+        username = st.text_input(
+            "Nome de usuário", placeholder="Nome de Usuário", max_chars=30
+        )
+        email = st.text_input(
+            "Email", placeholder="Ex.: exemple@exemple.com", max_chars=30
+        )
+        password = st.text_input(
+            "Senha", type="password", placeholder="Senha", max_chars=30
+        )
+        confirm_password = st.text_input(
+            "Confirme sua senha", type="password", placeholder="Confirmação de senha", max_chars=30
+        )
         
         col_cadastrar, col_login = st.columns(2)
         

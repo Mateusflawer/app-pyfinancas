@@ -4,7 +4,7 @@ import streamlit as st
 
 class Transaction:
     def __init__(self):
-        self._data = None
+        self._lancamento = None
         self.descricao = None
         self.categoria = None
         self.tipo = None
@@ -13,13 +13,13 @@ class Transaction:
         self._efetivada = None
 
     @property
-    def data(self):
-        data_hora = datetime.datetime.strptime(self._data, "%Y-%m-%d")
+    def lancamento(self):
+        data_hora = datetime.datetime.strptime(self._lancamento, "%Y-%m-%d")
         return data_hora
 
-    @data.setter
-    def data(self, data):
-        self._data = data
+    @lancamento.setter
+    def lancamento(self, data):
+        self._lancamento = data
         
     @property
     def efetivada(self):
@@ -32,7 +32,7 @@ class Transaction:
     @property
     def dataframe(self):
         data = [{
-            "data": self._data,
+            "data": self._lancamento,
             "descricao": self.descricao,
             "categoria": self.categoria,
             "tipo": self.tipo,
@@ -47,22 +47,22 @@ class Transaction:
 class Categorie:
     def __init__(self):
         self.nome = None
-        self._data = None
+        self._lancamento = None
         self.tipo = None
 
     @property
     def data(self):
-        data_hora = datetime.datetime.strptime(self._data, "%Y-%m-%d")
+        data_hora = datetime.datetime.strptime(self._lancamento, "%Y-%m-%d")
         return data_hora
 
     @data.setter
     def data(self, data):
-        self._data = data
+        self._lancamento = data
 
     @property
     def dataframe(self):
         data = [{
-            "data": self._data,
+            "data": self._lancamento,
             "nome": self.nome,
             "tipo": self.tipo,
             "user_id": st.session_state["user_id"]
@@ -73,21 +73,21 @@ class Categorie:
 class Account:
     def __init__(self):
         self.nome = None
-        self._data = None
+        self._lancamento = None
 
     @property
     def data(self):
-        data_hora = datetime.datetime.strptime(self._data, "%Y-%m-%d %H:%M:%S")
+        data_hora = datetime.datetime.strptime(self._lancamento, "%Y-%m-%d %H:%M:%S")
         return data_hora
 
     @data.setter
     def data(self, data):
-        self._data = data
+        self._lancamento = data
 
     @property
     def dataframe(self):
         data = [{
-            "data": self._data,
+            "data": self._lancamento,
             "nome": self.nome,
             "user_id": st.session_state["user_id"]
         }]
@@ -97,24 +97,24 @@ class Account:
 class CreditCard:
     def __init__(self):
         self.nome = None
-        self._data = None
+        self._lancamento = None
         self.fechamento = None
         self.vencimento = None
         self.limite = None
 
     @property
     def data(self):
-        data_hora = datetime.datetime.strptime(self._data, "%Y-%m-%d")
+        data_hora = datetime.datetime.strptime(self._lancamento, "%Y-%m-%d")
         return data_hora
 
     @data.setter
     def data(self, data):
-        self._data = data
+        self._lancamento = data
 
     @property
     def dataframe(self):
         data = [{
-            "data": self._data,
+            "data": self._lancamento,
             "nome": self.nome,
             "fechamento": self.fechamento,
             "vencimento": self.vencimento,

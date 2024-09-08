@@ -58,7 +58,7 @@ def load_years(table: str):
 
     query = f"""
         SELECT DISTINCT 
-            strftime('%Y', data) AS ano 
+            strftime('%Y', lancamento) AS ano 
         FROM {table} 
         WHERE user_id = ? 
         ORDER BY ano DESC
@@ -75,9 +75,9 @@ def load_months_by_year(table: str, year: str):
 
     query = f"""
         SELECT DISTINCT 
-            strftime('%m', data) AS mes 
+            strftime('%m', lancamento) AS mes 
         FROM {table} 
-        WHERE strftime('%Y', data) = ? AND user_id = ? 
+        WHERE strftime('%Y', lancamento) = ? AND user_id = ? 
         ORDER BY mes DESC
     """
     params = (year, st.session_state["user_id"])
@@ -97,10 +97,10 @@ def load_data_by_year_and_selected_months(table: str, selected_year: str, months
     query = f"""
         SELECT * 
         FROM {table}
-        WHERE strftime('%Y', data) = ? 
-        AND strftime('%m', data) IN ({placeholders}) 
+        WHERE strftime('%Y', lancamento) = ? 
+        AND strftime('%m', lancamento) IN ({placeholders}) 
         AND user_id = ? 
-        ORDER BY strftime('%Y', data), strftime('%m', data) DESC
+        ORDER BY strftime('%Y', lancamento), strftime('%m', lancamento) DESC
     """
     
     # Parâmetros combinados (ano, meses e user_id)

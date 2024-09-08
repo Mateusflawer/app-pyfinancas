@@ -16,10 +16,10 @@ def transactions_screen():
     col_registrar, col_deletar, col_editar = st.columns(3)
     
     if col_registrar.button("➕ Registrar", key="register_transaction"):
-        dialogs.transaction_line()
+        dialogs.register_transaction()
 
     if col_deletar.button("❌ Deletar", key="delete_transaction"):
-        dialogs.transaction_line()
+        dialogs.delete_transaction()
 
     
 def categories_screen():
@@ -30,10 +30,10 @@ def categories_screen():
     col_registrar, col_deletar, col_editar = st.columns(3)
     
     if col_registrar.button("➕ Registrar", key="register_categorie"):
-        dialogs.categorie_line()
+        dialogs.register_categorie()
 
     if col_deletar.button("❌ Deletar", key="delete_categorie"):
-        dialogs.categorie_line()
+        dialogs.delete_categorie()
 
 
 def accounts_screen():
@@ -44,9 +44,9 @@ def accounts_screen():
     col_registrar, col_deletar, col_editar = st.columns(3)
 
     if col_registrar.button("➕ Registrar", key="register_account"):
-        dialogs.account_line()
+        dialogs.register_account()
 
     if col_deletar.button("❌ Deletar", key="delete_account"):
-        dialogs.account_line()
+        dialogs.delete_account()
 
         
