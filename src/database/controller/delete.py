@@ -3,6 +3,7 @@ import sqlite3
 from .config import (
     DATABASE, TRANSACTIONS, CATEGORIES, ACCOUNTS,
 )
+import pandas as pd
 
 def delete_rows_by_id(table: str, ids: list):
     """
@@ -33,17 +34,20 @@ def delete_rows_by_id(table: str, ids: list):
     conn.close()
 
 
-def delete_rows_transactions_by_id(ids: list):
+def delete_rows_transactions_by_id(df: pd.DataFrame):
+    ids = df[df["Excluir"]==True]["id"].tolist()
     delete_rows_by_id(TRANSACTIONS, ids)
     st.cache_resource.clear()
     
     
-def delete_rows_categories_by_id(ids: list):
+def delete_rows_categories_by_id(df: pd.DataFrame):
+    ids = df[df["Excluir"]==True]["id"].tolist()
     delete_rows_by_id(CATEGORIES, ids)
     st.cache_resource.clear()
     
     
-def delete_rows_accounts_by_id(ids: list):
+def delete_rows_accounts_by_id(df: pd.DataFrame):
+    ids = df[df["Excluir"]==True]["id"].tolist()
     delete_rows_by_id(ACCOUNTS, ids)
     st.cache_resource.clear()
     

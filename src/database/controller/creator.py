@@ -26,6 +26,7 @@ def create_transactions_table():
     CREATE TABLE IF NOT EXISTS {TRANSACTIONS} (
         id INTEGER PRIMARY KEY, 
         user_id INT, 
+        tipo TEXT, 
         descricao TEXT, 
         valor FLOAT, 
         lancamento DATETIME,

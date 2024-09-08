@@ -9,22 +9,22 @@ ACCOUNT = "CONTAS"
 CATEGORIE = "CATEGORIAS"
 
 TABS = (TRANSACTION, CATEGORIE, ACCOUNT)
-
+ 
 def main():
     # Carregando dados após checar que existem os arquivos
     t_transaction, t_categorie, t_account = st.tabs(TABS)
 
     with t_transaction:
         with st.container(border=True):
-            tables.transactions_screen()
+            tables.transactions()
 
     with t_categorie:
         with st.container(border=True): 
-            tables.categories_screen()
+            tables.categories()
 
     with t_account:
         with st.container(border=True): 
-            tables.accounts_screen()
+            tables.accounts()
 
 
 if __name__ == "__main__":

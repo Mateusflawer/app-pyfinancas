@@ -6,11 +6,12 @@ from .config import (
 )
 
 
-def load_data(table: str):
+def load_data(table: str, cols: list):
     conn = sqlite3.connect(DATABASE)
+    cols_str = ', '.join(cols)
     
     query = f"""
-        SELECT * FROM {table} WHERE user_id = ?
+        SELECT {cols_str} FROM {table} WHERE user_id = ?
     """
     
     params = (st.session_state["user_id"],)
@@ -95,7 +96,18 @@ def load_data_by_year_and_selected_months(table: str, selected_year: str, months
     placeholders = ', '.join('?' for _ in months)
     
     query = f"""
-        SELECT * 
+        SELECT 
+            id, 
+            tipo, 
+            descricao, 
+            valor, 
+            lancamento, 
+            vencimento, 
+            efetivacao, 
+            categoria, 
+            subcategoria, 
+            cartao, 
+            conta 
         FROM {table}
         WHERE strftime('%Y', lancamento) = ? 
         AND strftime('%m', lancamento) IN ({placeholders}) 
@@ -169,14 +181,16 @@ def load_transactions_by_year_and_selected_months(year: str, months: list):
 @st.cache_resource
 def load_categories():
     """Carrega todas as categorias cadastradas"""
-    df = load_data(CATEGORIES)
+    cols = ['id', 'lancamento', 'nome', 'tipo']
+    df = load_data(CATEGORIES, cols)
     return df
 
 
 @st.cache_resource
 def load_accounts():
     """Carrega todas as contas cadastradas"""
-    df = load_data(ACCOUNTS)
+    cols = ['id', 'lancamento', 'nome']
+    df = load_data(ACCOUNTS, cols)
     return df
 
 

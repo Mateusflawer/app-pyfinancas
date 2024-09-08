@@ -27,14 +27,14 @@ def monthly_evolution_dashboard(df):
 
     with st.container(border=True):
         # Agrupando os dados para o gráfico de evolução mensal
-        df_entradas = df[df['tipo'] == ENTRADA].groupby('data').sum().reset_index()
-        df_saidas = df[df['tipo'] == SAIDA].groupby('data').sum().reset_index()
+        df_entradas = df[df['tipo'] == ENTRADA].groupby('lancamento').sum().reset_index()
+        df_saidas = df[df['tipo'] == SAIDA].groupby('lancamento').sum().reset_index()
         df_entradas['Saldo Acumulado'] = df_entradas['valor'].cumsum() - df_saidas['valor'].cumsum()
         fig = go.Figure()
 
         # Adicionando barras para Entradas
         fig.add_trace(go.Bar(
-            x=df_entradas['data'],
+            x=df_entradas['lancamento'],
             y=df_entradas['valor'],
             name=ENTRADA,
             marker_color='rgb(55, 83, 109)'
@@ -42,7 +42,7 @@ def monthly_evolution_dashboard(df):
 
         # Adicionando barras para saidas
         fig.add_trace(go.Bar(
-            x=df_saidas['data'],
+            x=df_saidas['lancamento'],
             y=df_saidas['valor'],
             name=SAIDA,
             marker_color='rgb(26, 118, 255)'
@@ -50,7 +50,7 @@ def monthly_evolution_dashboard(df):
 
         # Adicionando linha para Saldo Acumulado
         fig.add_trace(go.Scatter(
-            x=df_entradas['data'],
+            x=df_entradas['lancamento'],
             y=df_entradas['Saldo Acumulado'],
             mode='lines+markers',
             name='Saldo Acumulado',
