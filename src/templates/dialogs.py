@@ -5,7 +5,6 @@ from utils import dataframe_helpers
 
 TIPOS = ['Entrada', 'Saida']
 
-
 @st.fragment()
 @st.dialog("Registrar Transação")
 def register_transaction():
@@ -72,50 +71,6 @@ def register_account():
     
     if col_cancelar.button("Cancelar ❌"):
         st.rerun()
-
-
-################################################################################
-
-
-@st.fragment()
-@st.dialog('Editar Transação', width='small')
-def edit_transaction():
-    st.info('Em desenvolvimento...', icon='⚙️')
-    
-    col_excluir, col_cancelar = st.columns(2)
-    if col_excluir.button("Excluir ✅"):
-        st.rerun()
-
-    if col_cancelar.button("Cancelar ❌"):
-        st.rerun()
-
-
-@st.fragment()
-@st.dialog('Editar Categoria', width='small')
-def edit_categorie():
-    st.info('Em desenvolvimento...', icon='⚙️')
-    
-    col_excluir, col_cancelar = st.columns(2)
-    if col_excluir.button("Excluir ✅"):
-        st.rerun()
-
-    if col_cancelar.button("Cancelar ❌"):
-        st.rerun()
-
-
-@st.fragment()
-@st.dialog('Editar Conta', width='small')
-def edit_account():
-    st.info('Em desenvolvimento...', icon='⚙️')
-    
-    col_excluir, col_cancelar = st.columns(2)
-    if col_excluir.button("Excluir ✅"):
-        st.rerun()
-
-    if col_cancelar.button("Cancelar ❌"):
-        st.rerun()
-
-################################################################################
 
 
 @st.fragment()
@@ -186,10 +141,9 @@ def delete_account():
         use_container_width=True, hide_index=True
     )
     col_excluir, col_cancelar = st.columns(2)
-    if col_excluir.button("Excluir ✅"):
+    if col_excluir.button("Excluir ✅", key='delete-excluir'):
         controller.delete_rows_accounts_by_id(df_editado)
         st.rerun()
 
-    if col_cancelar.button("Cancelar ❌"):
+    if col_cancelar.button("Cancelar ❌", key='delete-cancelar'):
         st.rerun()
-        
