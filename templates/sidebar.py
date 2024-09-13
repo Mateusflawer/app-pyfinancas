@@ -36,7 +36,7 @@ def button_sair():
 
 def menu():
     if not autenticated_helpers.autenticated():
-        st.switch_page("pages\\0_login.py")
+        st.switch_page("pages/0_login.py")
     else:
         with st.sidebar:
             # Usuário
