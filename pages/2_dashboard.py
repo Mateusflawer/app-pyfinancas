@@ -1,9 +1,8 @@
 from templates import sidebar, metrics, graphcs
-from database import controller
 from utils import dataframe_helpers
+from database import controller
 import streamlit as st
 import locale
-
 
 locale.setlocale(locale.LC_ALL, "")
 
