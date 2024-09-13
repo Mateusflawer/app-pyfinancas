@@ -17,7 +17,7 @@ def register_transaction():
         transaction.vencimento = st.date_input("Vencimento", format="DD/MM/YYYY")
         with st.container(border=True):
             col1, col2 = st.columns(2)
-            if efetivado := col1.toggle('Efetivado', value=True):
+            if _ := col1.toggle('Efetivado', value=True, disabled=True):
                 transaction.efetivacao = col2.date_input(
                     "Efetivação", format="DD/MM/YYYY", label_visibility='collapsed',
                     help='Data de efetivação!'

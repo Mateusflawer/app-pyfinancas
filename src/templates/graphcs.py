@@ -1,8 +1,9 @@
-from database import controller
+from utils import dataframe_helpers
 import plotly.graph_objects as go
+from database import controller
 import plotly.express as px
 import streamlit as st
-from utils import dataframe_helpers
+import pandas as pd
 
 ENTRADA = controller.ENTRADA
 SAIDA = controller.SAIDA
@@ -117,3 +118,26 @@ def indicador():
     ))
 
     st.plotly_chart(fig)
+    
+
+# Função para criar o gráfico de saldo por conta
+def balance_on_account(df: pd.DataFrame):
+    
+    # Função para ajustar o saldo com base no tipo de transação
+    def calculate_balance(df):
+        df['valor_ajustado'] = df.apply(lambda row: -row['valor'] if row['tipo'] == 'Saida' else row['valor'], axis=1)
+        
+        # Agrupando por conta e somando o saldo ajustado
+        df_group = df.groupby('conta').agg(saldo=('valor_ajustado', 'sum')).reset_index()
+        
+        return df_group
+    
+    df_group = calculate_balance(df)
+    
+    with st.container(border=True):
+        # Criar o gráfico de barras com Plotly
+        fig = px.bar(df_group, x='conta', y='saldo', labels={'conta': 'Conta', 'saldo': 'Saldo (R$)'}, 
+                    title='Saldo por Conta', color='conta', text_auto=True)
+
+        # Exibir o gráfico no Streamlit
+        st.plotly_chart(fig)

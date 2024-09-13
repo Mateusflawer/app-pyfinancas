@@ -35,9 +35,8 @@ def main():
         # Despesas por categoria
         graphcs.expenses_by_categories_dashboard(df)
 
-        # Tabela de dados
-        with st.container(border=True):
-            st.dataframe()
+        # Saldo por conta
+        graphcs.balance_on_account(df)
 
 if __name__ == "__main__":
     # Configurações da página
