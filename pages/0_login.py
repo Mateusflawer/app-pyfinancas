@@ -30,7 +30,7 @@ def main():
                     st.session_state['username'] = username
                     st.session_state['password'] = password
                     st.session_state['user_id'] = str(df_user['id'].values[0])
-                    st.switch_page('pages/0_login.py')
+                    st.switch_page('pages/2_dashboard.py')
                 else:
                     st.toast("Credênciais inválidas", icon='❌')
             

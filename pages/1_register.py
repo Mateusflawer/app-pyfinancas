@@ -48,11 +48,11 @@ def show_registration_form():
                 controller.insert_user_registration(df)
                 
                 time.sleep(1)
-                st.switch_page("pages\\0_login.py")
+                st.switch_page("pages/0_login.py")
 
 
         if col_login.form_submit_button("Login"):
-            st.switch_page("pages\\0_login.py")
+            st.switch_page("pages/0_login.py")
         
 if __name__ == "__main__":
     st.set_page_config(
