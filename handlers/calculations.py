@@ -11,8 +11,29 @@ def dashboard_metrics(df):
     despesas = df.loc[df["tipo"]==controller.SAIDA, "valor"].sum()
     saldo = entradas - despesas
 
-    entradas = f'R$ {entradas:,.2f}'.replace('.', ',').replace(',', '.')
-    despesas = f'R$ {despesas:,.2f}'.replace('.', ',').replace(',', '.')
-    saldo = f'R$ {saldo:,.2f}'.replace('.', ',').replace(',', '.')
+    class BRL:
+        def __init__(self, valor: float) -> None:
+            self.valor = valor
+            
+        def converter_pontuacao(self, valor: float) -> str:
+            valor_str = f'{valor:,.2f}'
+            valor_str = valor_str.replace('.', '_')
+            valor_str = valor_str.replace(',', '.')
+            valor_str = valor_str.replace('_', ',')
+            return valor_str
+        
+        def adicionar_rs_sifrao(self, valor: str) -> str:
+            valor_brl = f'R$ {valor}'
+            return valor_brl
+        
+        def __repr__(self) -> str:
+            valor_brl = self.converter_pontuacao(self.valor)
+            valor_brl = self.adicionar_rs_sifrao(valor_brl)
+            return valor_brl
+
+
+    entradas = BRL(entradas)
+    despesas = BRL(despesas)
+    saldo = BRL(saldo)
 
     return entradas, despesas, saldo
