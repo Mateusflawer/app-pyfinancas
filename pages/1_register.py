@@ -42,7 +42,7 @@ def show_registration_form():
                     "username": [username],
                     "password": [password],
                     "email": [email],
-                    "data": [datetime.date.today()]
+                    "lancamento": [datetime.date.today()]
                 }
                 df = pd.DataFrame(data)
                 controller.insert_user_registration(df)
