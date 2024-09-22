@@ -11,8 +11,8 @@ def dashboard_metrics(df):
     despesas = df.loc[df["tipo"]==controller.SAIDA, "valor"].sum()
     saldo = entradas - despesas
 
-    entradas = locale.currency(entradas, grouping=True)
-    despesas = locale.currency(despesas, grouping=True)
-    saldo = locale.currency(saldo, grouping=True)
+    entradas = f'R$ {entradas:,.2f}'.replace('.', ',').replace(',', '.')
+    despesas = f'R$ {despesas:,.2f}'.replace('.', ',').replace(',', '.')
+    saldo = f'R$ {saldo:,.2f}'.replace('.', ',').replace(',', '.')
 
     return entradas, despesas, saldo
