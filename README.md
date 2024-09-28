@@ -1,1 +1,1 @@
-# Esse app foi feito para gerenciar suas finanças
+# Este app foi feito para gerenciar suas finanças
