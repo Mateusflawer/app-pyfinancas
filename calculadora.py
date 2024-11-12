@@ -4,7 +4,8 @@ import argparse
 parser = argparse.ArgumentParser(description="Script que processa um número.")
 
 # Adiciona um argumento chamado "numero" que será obrigatório
-parser.add_argument("numero", type=int, help="Um número inteiro para ser processado")
+parser.add_argument("numero", type=int,
+                    help="Um número inteiro para ser processado")
 
 # Faz o parsing dos argumentos fornecidos
 args = parser.parse_args()
