@@ -1,1 +1,1 @@
-# Este app foi feito para gerenciar suas finanças
+Teste de app de finanças usando a biblioteca streamlit do python
